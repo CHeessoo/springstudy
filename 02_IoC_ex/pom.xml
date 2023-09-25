@@ -1,32 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+  
 	<modelVersion>4.0.0</modelVersion>
-  
-    <!-- top level package, artifactId는 contextPath가 된다. -->
 	<groupId>com.gdu</groupId>
-	<artifactId>app01</artifactId>
-  
-    <!-- 프로젝트 이름 -->
-	<name>01_IoC</name>
-  
-    <!-- deploy(배포) file -->
+	<artifactId>app02</artifactId>
+	<name>02_IoC_ex</name>
 	<packaging>war</packaging>
-  
-    <!-- 프로젝트 버전 -->
 	<version>1.0.0-BUILD-SNAPSHOT</version>
   
-    <!--
-      속성의 버전에 따른 디펜던시(jar)를 다운로드 받는다.
-      작성된 버전 사용방법
-      ${java-version}                -> 11으로 변경된다.
-      ${org.springframework-version} -> 5.3.3으로 변경된다.
-      ${org.aspectj-version}         -> 1.9.6으로 변경된다.
-      ${org.slf4j-version}           -> 1.7.30으로 변경된다.
-      
-      springframework 버전 : 2021년 01월 버전
-      org.aspectj, org.slf4j 버전 : springframework 버전과 맞추거나 이전 버전을 사용
-    -->
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
@@ -34,24 +16,9 @@
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
   
-    <!--
-      Maven
-      1. Maven 레파지토리(https://mvnrepository.com/)에 각종 jar 파일을 보관하고 있다.
-      2. pom.xml 파일에 등록된 <dependency> 태그에 의해서 jar 파일이 자동으로 다운로드 된다.
-      3. pom.xml 파일을 수정하면 다운로드로 연결되므로 자주 저장하지 않는 것이 좋다.
-      4. 다운로드 받은 jar 파일들은 C:\Users\사용자\.m2\repository 디렉터리에 저장된다.
-      5. jar 파일에 문제가 발생한 경우
-        1) STS를 끈다.
-        2) C:\Users\사용자\.m2\repository 디렉터리를 지운다.
-        3) 다시 STS를 켠다.
-        4) 새로 다운로드 될 때까지 기다린다.
-        5) 프로젝트 우클릭 - [Maven] - [Update Project]
-    -->
+	<dependencies>
   
-    <!-- 디펜던시 : 필요한 jar 파일을 자동으로 가져온다. -->
-  	<dependencies>
-
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+          <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
@@ -65,7 +32,7 @@
           <artifactId>ojdbc8</artifactId>
           <version>23.2.0.0</version>
         </dependency>
-          
+        
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -167,8 +134,9 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>       
 	</dependencies>
+  
     <build>
         <plugins>
             <plugin>
