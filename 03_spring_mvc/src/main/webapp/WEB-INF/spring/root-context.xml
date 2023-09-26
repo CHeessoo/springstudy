@@ -7,6 +7,6 @@
   
     <!-- bean을 등록하는 Spring Bean Configuration File -->
     
-    <bean></bean>
+
 		
 </beans>
