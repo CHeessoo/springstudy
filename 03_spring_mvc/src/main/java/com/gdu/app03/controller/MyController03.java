@@ -4,8 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.gdu.app03.dto.BlogDto;
 
 @Controller
 public class MyController03 {
@@ -19,16 +22,16 @@ public class MyController03 {
   /*
    * Model 인터페이스
    * 1. Spring에서 forwarding할 정보를 저장하는 곳이다.
-   * 2. 메소드
+   * 2. jsp로 값을 전달할 때 사용한다.
+   * 3. 메소드
    *  1) addAttribute : Model에 속성을 추가하는 메소드
-   * 
-   * 3. Model Attribute를 사용해서 forward하는 정보를 Model에 저장하는 것이 권고사항이나,
-   *    실제 내부 로직(동작)은 request를 이용해서 attribute를 저장한다.
+   *     (Model Attribute를 사용해서 forward하는 정보를 Model에 저장하는 것이 권고사항이나,
+   *      실제 내부 로직(동작)은 request를 이용해서 attribute가 저장된다.)
    */
   
   
   // @RequestMapping("/blog/detail.do")  // GET 방식의 method는 생략할 수 있다. value만 작성할 땐 value= 부분도 생략할 수 있다.
-  public String blogDetail(HttpServletRequest request, Model model) {  // request에는 요청만 저장하고 forward할 정보는 Model에 저장한다.     
+  public String blogDetail1(HttpServletRequest request, Model model) {  // request에는 요청만 저장하고 forward할 정보는 Model에 저장한다.     
     // ViewResolver의 prefix : /WEB-INF/views/
     // ViewResolver의 suffix : .jsp
     String blogNo = request.getParameter("blogNo"); // 파라미터를 받아옴  
@@ -48,11 +51,33 @@ public class MyController03 {
    */
   
   
-  @RequestMapping("/blog/detail.do")
+  // @RequestMapping("/blog/detail.do")
   public String blogDetail2(@RequestParam(value="blogNo",required=false, defaultValue="1") int blogNo, Model model) {  // blogNo로 전달되는 파라미터를 int blogNo 변수에 저장(정수로 자동 변환)
                                                                                                                        // blogNo 값이 전달되지 않으면(필수가 아닌 경우) 1을 전달하겠다.(defaultValue 동작)
     model.addAttribute("blogNo", blogNo);
     return "blog/detail";
   }
+  
+  
+  /*
+   * 3. 커맨드 객체를 이용한 파라미터 처리
+   *  1) 요청 파라미터를 필드로 가지고 있는 객체를 커맨드 객체라고 한다.
+   *  2) 요청 파라미터를 필드에 저장할 때 Setter가 사용된다.
+   *  3) 요청 파라미터가 많은 경우에 유용하다. (insert 등)
+   *  4) 커맨드 객체는 자동으로 Model에 저장된다. 저장될 때 객체명(dto)이 아닌 클래스명(BlogDto)으로 저장된다.(클래스명을 LowerCamelCase로 바꿔서 저장한다.)
+   */
 
+  // @RequestMapping("/blog/detail.do")
+  public String blogDetail3(BlogDto dto) {  // Model에 저장된 이름은 dto가 아니라 blogDto 이다. (BlogDto dto 객체 안에 있는 필드값이 전달된다.)
+    return "blog/detail";
+  }
+  
+  
+  // @ModelAttribute를 이용해서 Model에 저장되는 커맨드 객체의 이름을 지정할 수 있다.
+  
+  @RequestMapping("/blog/detail.do")
+  public String blogDetail4(@ModelAttribute("dto") BlogDto blogDto) {  // Model에 저장되는 이름은 dto이다.
+    return "blog/detail";
+  }
+   
 }

@@ -24,7 +24,7 @@
   
   <%-- MyController03으로 요청 --%>
   <div>
-    <a href="${contextPath}/blog/detail.do">블로그 상세보기</a>
+    <a href="${contextPath}/blog/detail.do?blogNo=100">블로그 상세보기</a>
   </div>
   
   

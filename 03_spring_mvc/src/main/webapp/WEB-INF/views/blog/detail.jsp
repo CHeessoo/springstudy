@@ -7,9 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <%-- request에 저장된 blogNo를 부르는 방법인 EL(표현식) 사용 --%>
+  <%-- EL(표현식)을 사용해서 저장된 blogNo를 꺼낸다. --%>
   ${blogNo}
   <br>
   ${requestScope.blogNo}
+  <br>
+  ${blogDto.blogNo}
+  <br>
+  ${blogDto.getBlogNo()}
+  <br>
+  ${dto.blogNo}
 </body>
 </html>
