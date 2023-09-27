@@ -29,7 +29,7 @@ public class MyController01 {
   public String welcome() {
     // ViewResolver의 prefix : /WEB-INF/views/
     // ViewResolver의 suffix : .jsp
-    return "index";
+    return "index";  //        /WEB-INF/views/index.jsp
   }
   
   @RequestMapping(value="/board/list.do", method=RequestMethod.GET)  // 외부에서 구조를 예측할 수 없도록 요청 주소를 경로와 다르게 작업하는걸 권장
