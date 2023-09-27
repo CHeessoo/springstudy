@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -33,8 +34,7 @@ public class MyController04 {
   
   /*
    * 2. HttpSession 선언하기
-   */
-  
+   */ 
   // @GetMapping("/article/add.do")
   public String add2(HttpSession session, HttpServletRequest request) {  // 선언 순서는 상관 없다.
     session.setAttribute("title", request.getParameter("title"));
@@ -59,13 +59,12 @@ public class MyController04 {
   
   /*
    * 1. HttpSession의 invalidate() 메소드
-   */
-  
+   */ 
   // @GetMapping("/article/main.do")
   public String main(HttpSession session) {
     
     // session 정보 초기화
-    session.invalidate();  // 세션 무효화
+    session.invalidate();  // 세션 무효화 (Java 웹 표준 방식)
     
     return "index";        // main화면으로 돌아가기
   }
@@ -74,7 +73,6 @@ public class MyController04 {
   /*
    * 2. SessionStatus의 setComplet() 메소드
    */
-  
   @GetMapping("/article/main.do")
   public String main2(SessionStatus sessionStatus) {
     
@@ -85,12 +83,28 @@ public class MyController04 {
   
   
   
+  /*************************** 세션 정보 확인하기 ***************************/
+  
+  /*
+   * 1. HttpSession의 getAttribute() 메소드
+   */
+  // @GetMapping("/article/confirm.do")
+  public String confirm(HttpSession session) {
+    
+    String title = (String)session.getAttribute("title");  // Java 웹 표준 방식
+    System.out.println(title);
+    return "index";
+  }
   
   
-  
-  
-  
-  
+  /*
+   * 2. @SessionAttribute
+   */ 
+  @GetMapping("/article/confirm.do")
+  public String confirm2(@SessionAttribute("title") String title) {  // session에 저장된 "title" 속성을 String title에 저장한다.
+    System.out.println(title);
+    return "index";
+  }
   
 
 }
