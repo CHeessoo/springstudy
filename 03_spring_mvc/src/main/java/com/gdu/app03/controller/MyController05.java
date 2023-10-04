@@ -1,5 +1,7 @@
 package com.gdu.app03.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MyController05 {
@@ -32,12 +35,11 @@ public class MyController05 {
    * 2. 이동할 JSP 경로를 작성할 수 없다.
    */
 
-  @RequestMapping(value="/faq/add.do", method=RequestMethod.POST)
+  // @RequestMapping(value="/faq/add.do", method=RequestMethod.POST)
   public String add(HttpServletRequest request) {
     
     // 요청 파라미터 
     String title = request.getParameter("title");
-    String content = request.getParameter("content");
     
     // title이 빈 문자열이면 add 실패로 가정(DB 처리할 때 insert 성공은 1, 실패는 0이다.)
     int addResult = title.isEmpty() ? 0 : 1;
@@ -46,7 +48,7 @@ public class MyController05 {
     return "redirect:/faq/list.do?addResult=" + addResult;  // redirect는 값을 보낼 수 없기 때문에 파라미터로 전달(Redirect에서 Model 사용은 불가)
   }
   
-  @RequestMapping(value="/faq/list.do", method=RequestMethod.GET)
+  // @RequestMapping(value="/faq/list.do", method=RequestMethod.GET)
   public String list(@RequestParam(value="addResult", required=false) String addResult, Model model) {  // addResult가 파라미터로 전달된다.
     
     model.addAttribute("addResult", addResult);
@@ -54,6 +56,30 @@ public class MyController05 {
     // ViewResolver prefix : /WEB-INF/views/
     // ViewResolver Suffix : .jsp
     return "faq/list";  //   /WEB-INF/views/faq/list.jsp
+  }
+  
+  @RequestMapping(value="/faq/add.do", method=RequestMethod.POST)
+  public String add2(HttpServletRequest request
+                   , RedirectAttributes redirectAttributes) {  // redirect 상황에서 값을 전달할 때 사용한다.
+    
+    // 요청 파라미터
+    String title = request.getParameter("title");
+    
+    // title이 빈 문자열이면 add 실패
+    int addResult = title.isEmpty() ? 0 : 1;
+    
+    // faq 목록보기로 redirect 할 때 addResult를 "flash attribute"로 곧바로 전달하기 
+    // flash attribute : redirect 할 때 속성(값)을 바로 보낼 수 있도록 Spring에서 제공하는 방식
+    redirectAttributes.addFlashAttribute("addResult", addResult);
+    
+    // faq 목록보기로 redirect
+    return "redirect:/faq/list.do";
+    
+  }
+  
+  @RequestMapping(value="/faq/list.do", method=RequestMethod.GET)
+  public String list2() {
+    return "faq/list";
   }
   
 }
