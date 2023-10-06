@@ -28,7 +28,7 @@
 		 success: function(resData){
 		   $('#list').empty();  // 목록 초기화(데이터 누적 방지)
 		   $.each(resData, function(i, elem){
-	    	  $('#list').append('<div class="row">' + elem.name + ', ' + elem.age + '</div><input type="hidden" value="' + elem.name + '">');
+	    	  $('#list').append('<div class="row">' + elem.name + ', ' + elem.age + '</div><input type="hidden" value="' + elem.name + '">');  // 형제 태그로 name 구분하기
 		   })
 		 }
 	  })
@@ -40,7 +40,7 @@
     	//요청
     	type: 'get',
     	url: '${contextPath}/ajax2/detail.do',
-    	data: 'name=' + $(this).next().val(),
+    	data: 'name=' + $(this).next().val(),  // 바로 다음 형제 태그의 값 가져와서 요청
     	//응답
     	dataType: 'json',
     	success: function(resData){

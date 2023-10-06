@@ -28,7 +28,7 @@
 		 success: function(resData){
 		   $('#list').empty();  // 목록 초기화(데이터 누적 방지)
 		   $.each(resData, function(i, elem){
-	    	  $('#list').append('<div class="row"><span>' + elem.name + '</span>, ' + elem.age + '</div>');
+	    	  $('#list').append('<div class="row"><span>' + elem.name + '</span>, ' + elem.age + '</div>');  // 하위 태그로 name 구분하기
 		   })
 		 }
 	  })

@@ -23,12 +23,12 @@ public class AjaxController1 {
   @ResponseBody  // 메소드의 반환 값이 응답 데이터이다.
   @RequestMapping(value="/list.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")  // produces : 응답 데이터 타입
   public List<AjaxDto> list() {
-    return ajaxService.getDtoList();  // jackson 라이브러리가 List<Dto1>를 json 데이터로 자동 변환한다.
+    return ajaxService.getDtoList();  // jackson 라이브러리가 List<AjaxDto>를 json 데이터(배열)로 자동 변환한다.
   }
   
   @ResponseBody  // ajax에서 메소드마다 꼭 붙여야 함
   @RequestMapping(value="/detail.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")
   public AjaxDto detail(@RequestParam(value="name") String name) {
-    return ajaxService.getDto(name);
+    return ajaxService.getDto(name);  // jackson 라이브러리가 AjaxDto를 json 데이터(객체)로 자동 변환한다.
   }
 }
