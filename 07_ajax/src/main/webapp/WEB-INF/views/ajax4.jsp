@@ -21,7 +21,7 @@
 	  var path = encodeURIComponent('D:\\GDJ69\\assets\\image');
 	  var filename = $('#image').val();
 	  $('#display').empty();  // 초기화(empty는 이미지 태그만 지움)
-	  $('#display').append('<img src="${contextPath}/ajax4/display.do?path='+ path +'&filename='+ filename +'" width="192px">'); // 이미지 경로 : 요청 url
+	  $('#display').append('<img src="${contextPath}/ajax4/display.do?path=' + path + '&filename=' + filename + '" width="192px">'); // 이미지 경로 : 요청 url
 	})
   }
 

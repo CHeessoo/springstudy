@@ -15,7 +15,7 @@ public class AjaxController4 {
   // 서비스 생략하고 컨트롤러에서 직접 반환
   
   
-  @GetMapping(value="/ajax4/display.do", produces="application/octet-stream")  // octet-stream : file 자체의 데이터 타입
+  @GetMapping(value="/ajax4/display.do", produces="application/octet-stream")  // "application/octet-stream" : 이진 데이터(0, 1) 자체를 의미한다. (Java에서는 byte타입의 데이터를 의미)
   public ResponseEntity<byte[]> display(@RequestParam("path") String path
                                       , @RequestParam("filename") String filename) {
     
