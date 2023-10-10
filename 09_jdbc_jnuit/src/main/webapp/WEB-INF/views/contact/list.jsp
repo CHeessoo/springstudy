@@ -16,7 +16,7 @@
   
   function fnAddResult(){
   	var addResult = '${addResult}';
-  	if(addResult != ''{
+  	if(addResult !== ''){
   	  if(addResult === '1'){
   		alert('연락처가 등록되었습니다.');
   	  } else {
