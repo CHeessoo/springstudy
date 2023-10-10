@@ -8,11 +8,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  
+  $(function(){
+    fnAddResult();
+  })
+  
+  function fnAddResult(){
+  	var addResult = '${addResult}';
+  	if(addResult != ''{
+  	  if(addResult === '1'){
+  		alert('연락처가 등록되었습니다.');
+  	  } else {
+  		alert('연락처 등록이 실패했습니다.');
+  	  }
+  	})
+  }
+  
+</script>
 </head>
 <body>
 
   <div>
-    <h3>연락처관리</a></h3>
+    <h3>연락처관리</h3>
     <div>
       <a href="${contextPath}/contact/write.do">새연락처등록</a>
     </div>
