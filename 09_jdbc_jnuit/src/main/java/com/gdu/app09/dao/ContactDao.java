@@ -156,7 +156,7 @@ public class ContactDao {
    * @param contact_no 조회할 연락처 번호
    * @return contactDto 조회된 연락처 정보, 조회된 연락처가 없으면 null 반환
    */
-  public ContactDto selectContactByNO(int contact_no) {   // 번호로 조회하기
+  public ContactDto selectContactByNo(int contact_no) {   // 번호로 조회하기
     
     
     ContactDto contactDto = null; // 조회가 되면 new를 하겠다는 의미

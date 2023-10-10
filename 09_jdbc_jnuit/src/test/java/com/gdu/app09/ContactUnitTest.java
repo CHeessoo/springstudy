@@ -48,7 +48,7 @@ public class ContactUnitTest {
   @Test  // 테스트를 수행한다.
   public void test02_조회테스트() {
     int contact_no = 1;  // 연락처 번호를 시퀀스로 만들기 때문에 1부터 시작
-    ContactDto contactDto = contactDao.selectContactByNO(contact_no);
+    ContactDto contactDto = contactDao.selectContactByNo(contact_no);
     assertNotNull(contactDto); // contactDto가 not null이면 테스트 성공이다.
   }
   
