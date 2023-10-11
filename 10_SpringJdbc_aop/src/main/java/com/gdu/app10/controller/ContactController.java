@@ -15,7 +15,7 @@ import com.gdu.app10.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j  // private static final Logger log = LoggerFactory.getLogger(ContactController.class);
+
 @RequiredArgsConstructor  // private final ContactService contactService;에 @Autowired를 하기 위한 코드이다.
 @Controller
 public class ContactController {
@@ -39,7 +39,6 @@ public class ContactController {
   
   @RequestMapping(value="/contact/add.do", method=RequestMethod.POST)
   public String add(ContactDto contactDto, RedirectAttributes redirectAttributes) {
-    log.info("add:" + contactDto);
     int addResult = contactService.addContact(contactDto);
     redirectAttributes.addFlashAttribute("addResult", addResult);
     return "redirect:/contact/list.do";
@@ -47,14 +46,12 @@ public class ContactController {
   
   @RequestMapping(value="/contact/detail.do", method=RequestMethod.GET)
   public String detail(@RequestParam(value="contact_no", required=false, defaultValue="0") int contact_no, Model model) {
-    log.info("detail:" + contact_no);
     model.addAttribute("contact", contactService.getContactByNo(contact_no));
     return "contact/detail";
   }
   
   @RequestMapping(value="/contact/modify.do", method=RequestMethod.POST)
   public String modify(ContactDto contactDto, RedirectAttributes redirectAttributes) {
-    log.info("modify:" + contactDto);
     int modifyResult = contactService.modifyContact(contactDto);
     redirectAttributes.addFlashAttribute("modifyResult", modifyResult);
     return "redirect:/contact/detail.do?contact_no=" + contactDto.getContact_no();
@@ -62,10 +59,19 @@ public class ContactController {
   
   @RequestMapping(value="/contact/delete.do", method=RequestMethod.POST)
   public String delete(@RequestParam(value="contact_no", required=false, defaultValue="0") int contact_no, RedirectAttributes redirectAttributes) {
-    log.info("delete:" + contact_no);
     int deleteResult = contactService.deleteContact(contact_no);
     redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
     return "redirect:/contact/list.do";
+  }
+  
+  @RequestMapping(value="/contact/tx.do", method=RequestMethod.GET)
+  public String txTest() {
+    try {
+      contactService.txTest();
+    } catch (Exception e) {
+      return "redirect:/contact/list.do";
+    }
+    return null;  // 동작 안 하는 코드
   }
   
 }
