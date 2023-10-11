@@ -1,9 +1,7 @@
-package com.gdu.app09.controller;
+package com.gdu.app10.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdu.app09.dao.ContactDao;
-import com.gdu.app09.dto.ContactDto;
-import com.gdu.app09.service.ContactService;
+import com.gdu.app10.dto.ContactDto;
+import com.gdu.app10.service.ContactService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

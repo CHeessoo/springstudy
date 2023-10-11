@@ -58,7 +58,7 @@ public class BoardController {
    * 1. 필드 DI
    * 2. Setter 형식 메소드 DI
    * 3. 생성자 DI
-   * 4. final처리 후 @RequiredArgsConstructor
+   *   1) final처리 후 @RequiredArgsConstructor
    */  
   
   /*
