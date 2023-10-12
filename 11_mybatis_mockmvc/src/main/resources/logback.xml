@@ -6,7 +6,7 @@
   <!-- Console에 로그를 찍는 Appender -->
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="com.gdu.app10.logback.MyLogbackLayout" />
+      <layout class="com.gdu.app11.logback.MyLogbackLayout" />
     </encoder>
   </appender>
   
@@ -22,7 +22,10 @@
   <logger name="jdbc.connection"     level="off" />   <!-- Connection 연결/종료 정보 출력하기 -->
   <logger name="jdbc.audit"          level="off" />   <!-- ResultSet을 제외한 jdbc 호출 정보 출력하기 -->
   <logger name="jdbc.resultset"      level="off" />   <!-- ResultSet을 포함한 jdbc 호출 정보 출력하기 -->
-  
+  <logger name="com.zaxxer.hikari"   level="info" />  <!-- Connection Pool의 Debug 상태를 info로 출력하기(과도하게 뜨던 로그 정리) -->
+  <logger name="org.mybatis"         level="info" />  <!-- 간단한 정보 전달(info)만 log로 출력(과도하게 뜨던 로그 정리) -->
+  <logger name="org.apache.ibatis"   level="info" />  <!-- 간단한 정보 전달(info)만 log로 출력(과도하게 뜨던 로그 정리) -->
+   
   <!-- Root Logger -->
   <root>
     <priority value="warn" />

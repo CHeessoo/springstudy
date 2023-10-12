@@ -39,13 +39,13 @@ public class ContactController {
   @RequestMapping(value="/contact/add.do", method=RequestMethod.POST)
   public String add(ContactDto contactDto, RedirectAttributes redirectAttributes) {
     int addResult = contactService.addContact(contactDto);
-    redirectAttributes.addFlashAttribute("addResult", addResult);
+    redirectAttributes.addFlashAttribute("addResult", addResult);  // flash attribute에 값을 저장
     return "redirect:/contact/list.do";
   }
   
   @RequestMapping(value="/contact/detail.do", method=RequestMethod.GET)
   public String detail(@RequestParam(value="contactNo", required=false, defaultValue="0") int contactNo, Model model) {
-    model.addAttribute("contact", contactService.getContactByNo(contactNo));
+    model.addAttribute("contact", contactService.getContactByNo(contactNo));  // model에 저장
     return "contact/detail";
   }
   

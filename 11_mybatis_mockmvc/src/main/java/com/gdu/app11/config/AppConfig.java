@@ -12,12 +12,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @PropertySource(value="classpath:application.properties")  // @PropertySource를 가지고 프로퍼티를 읽으면 스프링이 자동으로 Environment값을 만들어서 객체(Bean)로 가지고 있음
-@EnableAspectJAutoProxy  // @Aspect동작 수행
+@EnableTransactionManagement  // @Transactional 허용
+@EnableAspectJAutoProxy       // @Aspect동작 수행
 @Configuration
 public class AppConfig {
   

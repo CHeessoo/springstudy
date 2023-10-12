@@ -11,5 +11,10 @@
     <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
   
+  <!-- 별명 만들기 -->
+  <typeAliases>
+    <typeAlias alias="ContactDto" type="com.gdu.app11.dto.ContactDto"/>
+  </typeAliases>
+  
 </configuration>
 
