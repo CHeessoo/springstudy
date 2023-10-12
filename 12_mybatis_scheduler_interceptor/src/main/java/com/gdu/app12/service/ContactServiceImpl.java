@@ -66,5 +66,10 @@ public class ContactServiceImpl implements ContactService {
     contactDao.insert(new ContactDto());  // NAME 칼럼은 NOT NULL이므로 전달된 이름이 없으면 Exception이 발생한다.
     
   }
+  
+  @Override
+  public void deleteOldestContact() {
+    contactDao.deleteOldestContact();
+  }
 
 }

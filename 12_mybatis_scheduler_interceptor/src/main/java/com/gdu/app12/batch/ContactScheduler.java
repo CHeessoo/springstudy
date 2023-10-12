@@ -3,6 +3,9 @@ package com.gdu.app12.batch;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.gdu.app12.service.ContactService;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /*
@@ -40,12 +43,19 @@ import lombok.extern.slf4j.Slf4j;
  *  http://www.cronmaker.com/
  */
 
+@RequiredArgsConstructor
 @Slf4j
 @Component
 public class ContactScheduler {
   
-  @Scheduled(cron="0/5 * * * * ?")
+  private final ContactService contactService;
+  
+  @Scheduled(cron="0 0/1 * * * ?")
   public void doSomthing() {
+    
+    // 1분마다 가장 예전에 등록된 연락처를 삭제하는 스케쥴러
+    // DELETE - ContactMapper/contackMappre - ContactService/ContactServiceImpl
+    contactService.deleteOldestContact();
     log.info("doSomething()");
   }
 

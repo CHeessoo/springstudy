@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
 	<artifactId>app12</artifactId>
-	<name>12_mybatis_scheduler</name>
+	<name>12_mybatis_scheduler_interceptor</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 
@@ -93,7 +93,7 @@
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
-      <version>3.4.5</version>
+      <version>5.0.1</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
     <dependency>

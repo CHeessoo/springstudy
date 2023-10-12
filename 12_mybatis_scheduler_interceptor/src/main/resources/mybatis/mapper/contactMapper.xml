@@ -3,34 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- mapper    : sql문을 적어주는 곳 -->
-<!-- namespace : mapper의 경로 -->
+
 <mapper namespace="com.gdu.app12.dao.ContactMapper">
 
-  <!-- 태그의 id는 이 태그를 호출할 메소드의 이름과 맞춘다. -->
-  <!-- parameterType은 패키지명도 함께 적어주어야 한다. -->
-  <!-- mybatis-config에서 com.gdu.app11.dto.ContactDto를 Aliases 처리해줌 -->
-  <!-- 반복적으로 공통되게 나오는건 어떻게든 처리해주는것이 좋다. -->
-  <!-- #{필드명} 형식 : 전달되는 DTO에 들어가는 필드명을 적어준다. -->
-  
-  
-  <!-- insert의 경우 반환값(resultType="int")을 생략한다. -->
   <insert id="insert" parameterType="ContactDto"> 
     INSERT INTO CONTACT_T(CONTACT_NO, NAME, TEL, EMAIL, ADDRESS, CREATED_AT) VALUES(CONTACT_SEQ.NEXTVAL, #{name}, #{tel}, #{email}, #{address}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
   </insert>
   
-  <!-- update도 리턴값이 int이며, 못 적게 되어있다. -->
   <update id="update" parameterType="ContactDto">
     UPDATE CONTACT_T SET NAME = #{name}, TEL = #{tel}, EMAIL = #{email}, ADDRESS = #{address} WHERE CONTACT_NO = #{contactNo}
   </update>
   
-  <!-- 마찬가지로 반환값 생략 -->
   <delete id="delete" parameterType="int">
     DELETE FROM CONTACT_T WHERE CONTACT_NO = #{contactNo}
   </delete>
   
-  
-  <!-- List<ContactDto>에 들어간 실제 타입을 적어줘야한다. 반환타입은 List가 아닌 ContactDto -->
   <select id="selectList" resultType="ContactDto">
     SELECT CONTACT_NO, NAME, TEL, EMAIL, ADDRESS, CREATED_AT FROM CONTACT_T ORDER BY CONTACT_NO
   </select>
@@ -38,6 +25,15 @@
   <select id="selectContactByNo" parameterType="int" resultType="ContactDto">
     SELECT CONTACT_NO, NAME, TEL, EMAIL, ADDRESS, CREATED_AT FROM CONTACT_T WHERE CONTACT_NO = #{contactNo}
   </select>
+  
+  
+  
+  <delete id="deleteOldestContact">
+    DELETE
+      FROM CONTACT_T
+     WHERE CONTACT_NO = (SELECT MIN(CONTACT_NO)
+                           FROM CONTACT_T)
+  </delete>
   
 </mapper>
   

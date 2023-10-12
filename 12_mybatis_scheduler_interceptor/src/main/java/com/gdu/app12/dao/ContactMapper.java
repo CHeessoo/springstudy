@@ -21,4 +21,5 @@ public interface ContactMapper {
   public int delete(final int contactNo);
   public List<ContactDto> selectList();
   public ContactDto selectContactByNo(int contactNo);
+  public int deleteOldestContact();
 }
