@@ -20,7 +20,7 @@ public class MyFileUtil {
   public String getFilesystemName(String originalName) {
     
     /* UUID.확장자 */
-    // UUID (universally unique identifier) : 범용 고유 식별자
+    /* UUID (universally unique identifier) : 범용 고유 식별자 */
     
     String extName = null;
     if(originalName.endsWith("tar.gz")) {        // 확장자에 마침표가 포함되는 예외 경우를 처리한다.
