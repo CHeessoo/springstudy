@@ -1,6 +1,5 @@
 package com.gdu.app14.service;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,5 +13,5 @@ public interface MemberService {
   //ResponseEntity<Map<String, Object>>로도 사용 가능(ResponseEntity는 @ResponseBody를 이미 내장) 
   
   // 회원 목록
-  public List<MemberDto> getMembers(int page);
+  public Map<String, Object> getMembers(int page);
 }

@@ -14,6 +14,7 @@
 
 	$(function() {
 		fnMemberRegister();
+		fnMemberList();
 	})
 
 	// 회원 등록
@@ -38,6 +39,25 @@
 			})
 		})
 	}
+	
+	// 전역변수(모든 함수에서 사용할 수 있는 변수)
+	var page=1;
+	
+	// 회원 목록
+	function fnMemberList(){
+		$.ajax({
+	      // 요청
+	      type: 'get',
+	      url: '${contextPath}/members/page/' + page,
+	      // 응답
+	      dataType: 'json',
+	      success: function(resData) {
+	    	console.log(resData);
+	      }
+	      
+		})
+	}
+	
 </script>
 </head>
 <body>

@@ -29,5 +29,10 @@
      WHERE RN BETWEEN #{begin} AND #{end}
   </select>
   
+  <select id="getMemberCount" resultType="int">
+    SELECT COUNT(*)
+      FORM MEMBER_T
+  </select>
+  
 </mapper>
   

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gdu.app14.dao.MemberMapper;
 import com.gdu.app14.dto.MemberDto;
+import com.gdu.app14.util.PageUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
   
   private final MemberMapper memberMapper;
+  private final PageUtil pageUtil;
 
   @Override
   public Map<String, Object> register(MemberDto memberDto, HttpServletResponse httpServletResponse) {
@@ -36,9 +38,20 @@ public class MemberServiceImpl implements MemberService {
   }
   
   @Override
-  public List<MemberDto> getMembers(int page) {
+  public Map<String, Object> getMembers(int page) {
     
-    return null;
+    int total = memberMapper.getMemberCount();
+    int display = 2; 
+    
+    pageUtil.setPaging(page, total, display);
+    
+    Map<String, Object> map = Map.of("begin", pageUtil.getBegin()
+                                    , "end", pageUtil.getEnd());
+    List<MemberDto> memberList = memberMapper.getMemberList(map);
+    String paging = pageUtil.getAjaxPaging();
+    
+    return Map.of("memberList", memberList
+                 , "paging", paging);
   }
 
 }

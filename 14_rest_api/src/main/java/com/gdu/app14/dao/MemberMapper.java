@@ -16,4 +16,7 @@ public interface MemberMapper {
   // 목록
   public List<MemberDto> getMemberList(Map<String, Object> map);
   
+  // 전체 개수
+  public int getMemberCount();
+  
 }
