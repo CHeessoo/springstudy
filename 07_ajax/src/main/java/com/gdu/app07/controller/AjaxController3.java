@@ -26,7 +26,7 @@ public class AjaxController3 {
   @GetMapping(value="/list.do", produces="application/json; charset=UTF-8")
   public ResponseEntity<List<AjaxDto>> list() {  // ResponseEntity : Ajax 응답 전용 스프링 클래스, @ResponseBody가 포함되어 있다.
     // ResponseEntity 생성자로 만들어서 전달
-    return new ResponseEntity<List<AjaxDto>>(    // ResponseEntity는 @ResponseBody를 작성하지 않는다.
+    return new ResponseEntity<List<AjaxDto>>(    // ResponseEntity는 @ResponseBody를 내장하고 있기 때문에 작성하지 않는다.
                  ajaxService.getDtoList()        // 실제 응답 데이터
                , HttpStatus.OK);                 // 응답 코드(200)
   }

@@ -8,63 +8,135 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="${contextPath}/resources/ckeditor/ckeditor.js"></script> <!-- 주소값을 적어야함(location이 아니라 mapping) -->
+<script>
+
+  $(function(){     
+    fnFileCheck(); // fnFileCheck() 호출
+    fnUpload();    // fnUpload()    호출
+    fnCkeditor();  // fnCkediotr()  호출
+  })
+  
+  function fnFileCheck(){
+    $('.files').change(function(){      // 파일 첨부가 바뀌거나 새로 첨부를 했을때 사용하는 change이벤트
+      console.log(this.files);  
+      $('#file_list').empty();          // 이전 첨부했던 목록이 남아있지 않도록 첨부된 파일 목록 초기화
+      var maxSize = 1024 * 1024 * 100;  // 전체 파일 최대 크기 100MB
+      var maxSizePerFile = 1024 * 1024 * 10;
+      var totalSize = 0;
+      var files = this.files;
+      for(let i = 0; i < files.length; i++){
+        totalSize += files[i].size;
+        if(files[i].size > maxSizePerFile){  // files[i].size : 개별 파일 크기
+          alert('각 첨부파일의 최대 크기는 10MB입니다.');
+          $(this).val('');         // 첨부된 모든 파일을 지우라는 의미(10.13-4교시 13븐)
+          $('#file_list').empty(); // 실패했을 때 파일 리스트 초기화
+          return;                  // 더 진행되지 못하게 종료
+        }
+        $('#file_list').append('<div>' + files[i].name + '</div>');
+      }
+      if(totalSize > maxSize){
+        alert('전체 첨부파일의 최대 크기는 100MB입니다.');
+        $(this).val(''); // 첨부된거 지움
+        $('#file_list').empty();
+        return;
+      }
+    })
+  }
+  
+  function fnUpload(){
+      $('#btn_upload').click(function(){
+        // ajax 파일 첨부는 FormData 객체를 생성해서 data로 전달한다.
+        var formData = new FormData();
+        var files = $('#files')[0].files; // 첨부된파일들 배열이 됨
+        $.each(files, function(i, elem){          
+          formData.append('files', elem); // files안에 첨부된 파일들을 받음 (name="files" value=elem)과 같다. == 요청 파라미터를 files라는 이름으로 보낸것과 같다.)
+        })
+        // ajax
+        $.ajax({
+          // 요청
+          type: 'post',
+          url: '${contextPath}/ajax/upload.do',
+          data: formData,     // 만든 form을 보내는 방법
+          contentType: false, // contentType : 파라미터로 전달되는 데이터 타입이 아닐때(post) 사용
+          processData: false, // processData : form 을 보낼때 사용
+          // 응답
+          dataType: 'json',
+          success: function(resData){  // resData === {"success":true} (true면 성공 false면 실패)
+            if(resData.success){
+              alert('성공');
+            } else {
+              alert('실패');
+            }
+          }
+        })
+      })
+    }
+  
+  function fnCkeditor(){
+		 
+	  CKEDITOR.replace('contents', {  // <textarea id="contents"></textarea>
+		  width: '1000px',
+		  height: '400px',
+		  filebrowserImageUploadUrl: '${contextPath}/ckeditor/upload.do'  // 이미지 업로드 경로
+	  });
+	  
+	  CKEDITOR.on('dialogDefinition', function(event){
+		  var dialogName = event.data.name;
+		  var dialogDefinition = event.data.definition;
+		  switch(dialogName){
+		  case 'image':
+			  dialogDefinition.removeContents('Link');
+			  dialogDefinition.removeContents('advanced');
+			  break;
+		  }
+	  });
+	  
+  }
+
+</script>
 </head>
 <body>
 
   <div>
-   <form method="post" action="${contextPath}/upload.do" enctype="multipart/form-data">
-    <div>
-      <input type="file" name="files" multiple>
-    </div>
-    <div>
-      <button type="submit">업로드</button>
-    </div>
-   </form>
+    <h3>MVC 파일첨부</h3>
+    <form method="post" action="${contextPath}/upload.do" enctype="multipart/form-data">
+      <div>
+        <input type="file" name="files" class="files" multiple>
+      </div>
+      <div>
+        <button type="submit">업로드</button>
+      </div>
+      <div id="file_list"></div>
+    </form>
   </div>
   
   <hr>
   
   <div>
+    <h3>ajax 파일첨부</h3>
     <div>
-      <input type="file" id="files" multiple>
+      <input type="file" class="files" multiple>
     </div>
     <div>
       <button type="button" id="btn_upload">업로드</button>
     </div>
   </div>
-  <script>
-    fnUpload();  // fnUpload(); 호출
-    
-  	function fnUpload(){
-  	  $('#btn_upload').click(function(){
-  		// ajax 파일 첨부는 FormData 객체를 생성해서 data로 전달한다.
-  		var formData = new FormData();
-  		var files = $('#files')[0].files;  // 첨부된파일들 배열이 됨
-  		$.each(files, function(i, elem){
-    	  formData.append('files', elem);  // files안에 첨부된 파일들을 받음 (name="files" value=elem)과 같다. == 요청 파라미터를 files라는 이름으로 보낸것과 같다.)
-  		})
-  		// ajax
-  		$.ajax({
-  		  // 요청
-  		  type: 'post',
-  		  url : '${contextPath}/ajax/upload.do',
-  		  data: formData,     // 위에서 만든 form을 보내는 방법
-  		  contentType: false, // contentType : 파라미터로 전달되는 데이터 타입이 아닐때(post) 사용
-  		  processData: false, // processData : form 을 보낼때 사용
-  		  // 응답
-  		  dataType: 'json',
-  		  success: function(resData){  // resData === {"success":true} (true면 성공 false면 실패)
-  			if(resData.success){
-  			  alert('성공');
-  			} else {
-  			  alert('실패');
-  			}
-  			  
-  		  }
-  		})
-  	  })
-  	}
-  </script>
+  
+  
+  <hr>
+  
+  
+  <div>
+    <h3>CKEditor</h3>
+    <form>
+      <div>
+        <textarea id="contents"></textarea>
+      </div>
+    </form>
+  </div>
+  
+  
 
 </body>
 </html>
