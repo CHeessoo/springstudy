@@ -109,5 +109,49 @@ public class FileServiceImpl implements FileService {
     }
     return Map.of("success", true);  // 성공 반환, 본문 코드는 위 upload()메소드와 동일하나 Map을 반환하는것만 다르다.
   }
+  
+  
+  @Override
+  public Map<String, Object> ckeditorUpload(MultipartFile upload, String contextPath) {  // context path만 String으로 빼서 전달 받음
+    
+    // 이미지 저장할 경로
+    String path = myFileUtil.getPath();
+    File dir = new File(path);
+    if(!dir.exists()) {
+      dir.mkdirs();
+    }
+    
+    // 이미지 저장할 이름 (원래 이름 + 저장할 이름)
+    String originalFilename = upload.getOriginalFilename();
+    String filesystemName = myFileUtil.getFilesystemName(originalFilename);
+    
+    // 이미지 File 객체
+    File file = new File(dir, filesystemName);
+    
+    // File 객체를 참고하여, MultipartFile upload 첨부 이미지 저장
+    try {
+      upload.transferTo(file);  // upload를 file객체 정보로 보냄
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    System.out.println(contextPath + path + "/" + filesystemName);
+    // CKEditor로 저장된 이미지를 확인할 수 있는 경로를 {"url": "http://localhost:8080/app13/..."} 방식으로 반환해야 한다.(정해진 방식)
+    return Map.of("url", contextPath + path + "/" + filesystemName
+                , "uploaded", true); // "uploaded", true 를 꼭 붙여줘야함
+    /*
+     * CKEditor로 반환할 url
+     * 
+     * servlet-context.xml에
+     *   /storage/** 주소로 요청을 하면 /storage/ 디렉터리의 내용을 보여주는 <resources>태그를 추가한다.
+     */
+    
+    /*
+     * 직접 경로를 지정하는 방식
+     *   return Map.of("url", contextPath + "/display.do?path=" + path + "&filename=" + filesystemName
+     *               , "uploaded", true);
+     */
+
+  }
 
 }
