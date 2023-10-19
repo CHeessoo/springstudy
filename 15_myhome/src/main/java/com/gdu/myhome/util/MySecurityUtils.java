@@ -18,12 +18,12 @@ public class MySecurityUtils {
   public String getSHA256(String password) {
     StringBuilder sb = new StringBuilder();
     try {
-      // MessageDigest는 자바에서 단방향 해시 함수 값을 구할 때 사용
-      MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");  // getInstance(알고리즘명시)
-      messageDigest.update(password.getBytes());             // 입력받은 password의 바이트 배열 값을 입력해준다.
-      byte[] b = messageDigest.digest();                     // 암호화된 32바이트 배열이 생성됨
+                                                                          // MessageDigest : 자바에서 단방향 해시 함수 값을 구할 때 사용
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-256"); // getInstance(알고리즘명시)
+      messageDigest.update(password.getBytes());                          // 입력받은 password의 바이트 배열 값을 입력
+      byte[] b = messageDigest.digest();                                  // 암호화된 32바이트 배열이 생성됨
       for(int i = 0; i < b.length; i++) {
-        sb.append(String.format("%02X", b[i]));               // 2자리 16진수 문자열로 변환하기(0으로 시작하는 값은 0으로 표현하기 10.19-4교시 22분)
+        sb.append(String.format("%02X", b[i]));                           // 2자리 16진수 문자열로 변환하기(0으로 시작하는 값은 0으로 표현하기)
       }
     } catch (Exception e) {
       e.printStackTrace();

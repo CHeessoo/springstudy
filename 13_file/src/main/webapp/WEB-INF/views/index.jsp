@@ -41,7 +41,7 @@
         totalSize += files[i].size;
         if(files[i].size > maxSizePerFile){  // files[i].size : 개별 파일 크기
           alert('각 첨부파일의 최대 크기는 10MB입니다.');
-          $(this).val('');         // 첨부된 모든 파일을 지우라는 의미(10.13-4교시 13븐)
+          $(this).val('');         // 빈문자열로 바꿔주면 첨부된 모든 파일을 지우라는 의미
           $('#file_list').empty(); // 실패했을 때 파일 리스트 초기화
           return;                  // 더 진행되지 못하게 종료
         }
