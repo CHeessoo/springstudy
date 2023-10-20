@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.gdu.myhome.dao.UserMapper;
@@ -78,4 +80,43 @@ public class UserSerivceImpl implements UserService {
   }
   
   
+  @Override
+  public ResponseEntity<Map<String, Object>> checkEmail(String email) {
+    
+    Map<String, Object> map = Map.of("email", email);
+    
+    boolean enableEmail = userMapper.getUser(map) == null
+                       && userMapper.getLeaveUser(map) == null
+                       && userMapper.getInactiveUser(map) == null; 
+    
+    return new ResponseEntity<>(Map.of("enableEmail", enableEmail), HttpStatus.OK);
+  }
+  
+  
+  @Override
+  public ResponseEntity<Map<String, Object>> sendCode(String email) {
+    
+    // RandomString 생성(6자리, 문자 사용, 숫자 사용)
+    String code = mySecurityUtils.getRandomString(6, true, true);
+    
+    // 메일 전송
+    myJavaMailUtils.sendJavaMail(email
+                               , "myhome 인증 코드"
+                               , "<div>인증코드는 <strong>" + code + "</strong>입니다.</div>");
+    
+    return new ResponseEntity<>(Map.of("code", code), HttpStatus.OK);
+  }
+  
+  
 }
+
+
+
+
+
+
+
+
+
+
+
