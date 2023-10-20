@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.gdu.myhome.dao.UserMapper;
 import com.gdu.myhome.dto.UserDto;
+import com.gdu.myhome.util.MyJavaMailUtils;
 import com.gdu.myhome.util.MySecurityUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UserSerivceImpl implements UserService {
 
   private final UserMapper userMapper;
   private final MySecurityUtils mySecurityUtils;
+  private final MyJavaMailUtils myJavaMailUtils;
   
   @Override
   public void login(HttpServletRequest request, HttpServletResponse response) {  // 응답 형식이 많은 경우 void 반환 / Respose로 응답
