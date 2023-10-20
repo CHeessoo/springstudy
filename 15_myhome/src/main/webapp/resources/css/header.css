@@ -6,23 +6,24 @@
 .header_wrap {
   width: 100%;
   margin: 0 auto;
+  padding-top: 50px; 
 }
 .logo {
   /* 로고 이미지를 가운데 배치 */
   width: 176px;
   height: 46px;
-  background-image: url(./resources/image/goodee.png);
+  background-image: url(../../resources/image/goodee.png);
   background-size: 176px 46px;
   margin: 50px auto;
 }
 .login_wrap {
   width: 100%;
-  height: 32px;
+  height: 48px;
   text-align: right;
 }
 .gnb_wrap {
   width: 100%;
-  height: 32px;
+  height: 48px;
   border-bottom: 1px solid gray;
 }
 .gnb {
@@ -32,16 +33,14 @@
 }
 .gnb li {
   width: 100%;
-  height: 48px;
 }
 .gnb a {
   display: block;
   width: 100%;
-  height: 100%;
   text-align: center;
   line-height: 48px;
   cursor: pointer;
 }
 .gnb a:hover {
-  background-color: #DDDDDD;
+  background-color: #efefef;
 }
