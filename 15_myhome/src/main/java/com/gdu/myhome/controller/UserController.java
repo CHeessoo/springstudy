@@ -73,6 +73,12 @@ public class UserController {
     return userService.sendCode(email);
   }
   
+  
+  @PostMapping("/join.do")
+  public void join(HttpServletRequest request, HttpServletResponse response) {  // 반환타입이 void인 대표적인 경우 : 서비스 안에서 직접 이동하는 경우
+    userService.join(request, response);
+  }
+  
 }
 
 

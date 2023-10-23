@@ -39,6 +39,7 @@ public class MySecurityUtils {
   }
   
   // 크로스 사이트 스크립팅(Cross Site Scripting) 방지
+  // 사용자가 태그(코드)를 입력시 무력화
   public String preventXSS(String source) {
     return source.replace("<", "&lt;").replace(">", "&gt;");  // 사용자가 입력한 값이 태그 기호로 인입시 문자인식으로 변경하기
   }

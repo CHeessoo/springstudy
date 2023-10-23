@@ -12,4 +12,5 @@ public interface UserService {
   public void logout(HttpServletRequest request, HttpServletResponse response);
   public ResponseEntity<Map<String, Object>> checkEmail(String email);
   public ResponseEntity<Map<String, Object>> sendCode(String email);
+  public void join(HttpServletRequest request, HttpServletResponse response);
 }
