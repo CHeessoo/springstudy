@@ -25,6 +25,7 @@
   width: 100%;
   height: 48px;
   border-bottom: 1px solid gray;
+  margin-top: 10px;
 }
 .gnb {
   display: flex;                  /* 메뉴를 좌우로 배치 */
