@@ -37,6 +37,10 @@
       <li><a href="${contextPath}">자동로그인</a>
       <li><a href="${contextPath}">아이디/비밀번호 찾기</a>
     </ul>
+    <hr>
+    <div>
+      <a href="${naverLoginURL}"><img src="${contextPath}/resources/image/btnG_완성형.png" width="200px"></a>
+    </div>
   </div>
 
 <%-- include지시어는 파라미터 전달이 없을 때 사용 --%>
