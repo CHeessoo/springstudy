@@ -19,10 +19,18 @@
   
   <div>
     <table border="1">
+      <thead>
+        <tr>
+          <td>순번</td>
+          <td>작성자</td>
+          <td>내용</td>
+          <td>작성일자</td>
+        </tr>
+      </thead>
       <tbody>
-        <c:forEach items="${freeList}" var="free">
+        <c:forEach items="${freeList}" var="free" varStatus="vs">
           <tr>
-            <td></td>
+            <td>${beginNo - vs.index}</td>
             <td>${free.email}</td>
             <td>${free.contents}</td>
             <td>${free.createdAt}</td>
