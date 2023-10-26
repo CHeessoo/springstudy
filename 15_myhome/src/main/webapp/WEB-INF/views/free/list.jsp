@@ -40,6 +40,12 @@
             <td>${beginNo - vs.index}</td>
             <td>${free.email}</td>
             <td>
+              <!-- depth에 따른 들여쓰기 -->
+              <c:forEach begin="1" end="${free.depth}" step="1">&nbsp;&nbsp;</c:forEach>
+              <!-- 댓글은 댓글 아이콘 부착하기 -->
+              <c:if test="${free.depth != 0}">
+                <i class="fa-brands fa-replyd"></i>
+              </c:if>
               ${free.contents}
               <!-- 댓글작성버튼 -->
               <button type="button" class="btn_reply">댓글</button>
@@ -93,6 +99,13 @@
   
   const fnBlind = () => {
 	$('.btn_reply').click((ev) => {
+	  if('${sessionScope.user}' === ''){
+		if(confirm('로그인이 필요한 서비스 입니다. 로그인할까요?')){
+		  location.href = '${contextPath}/user/login.form';
+		} else {
+		  return;
+		}
+	  }
 	  // 화살표 함수는 this 객체가 지원되지 않기 때문에
 	  // 이벤트 대상을 "이벤트 객체"의 "target" 속성으로 처리한다.
 	  let writeTr = $(ev.target).closest('.list').next();
