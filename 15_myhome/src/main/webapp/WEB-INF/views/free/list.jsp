@@ -10,8 +10,8 @@
   <jsp:param value="자유게시판" name="title"/>
 </jsp:include>
 <style>
-  .btn_new_write {
-    margin : 10px 0;
+  .btn-secondary {
+    margin : 10px 10px;
   }
   .blind {
     display: none;
@@ -20,7 +20,11 @@
 
 <div>
 
-  <div class="btn_new_write"><a href="${contextPath}/free/write.form">새글작성</a></div>
+  <div>
+    <a href="${contextPath}/free/write.form">
+      <button type="button" class="btn btn-secondary">새글작성</button>
+    </a>
+  </div>
   
   <hr>
   
@@ -38,19 +42,37 @@
         <c:forEach items="${freeList}" var="free" varStatus="vs">
           <tr class="list">
             <td>${beginNo - vs.index}</td>
-            <td>${free.email}</td>
-            <td>
-              <!-- depth에 따른 들여쓰기 -->
-              <c:forEach begin="1" end="${free.depth}" step="1">&nbsp;&nbsp;</c:forEach>
-              <!-- 댓글은 댓글 아이콘 부착하기 -->
-              <c:if test="${free.depth != 0}">
-                <i class="fa-brands fa-replyd"></i>
-              </c:if>
-              ${free.contents}
-              <!-- 댓글작성버튼 -->
-              <button type="button" class="btn_reply">댓글</button>
-            </td>
-            <td>${free.createdAt}</td>
+            <!-- 정상 게시글 -->
+            <c:if test="${free.status == 1}">
+              <td>${free.email}</td>
+              <td>
+                <!-- depth에 따른 들여쓰기 -->
+                <c:forEach begin="1" end="${free.depth}" step="1">&nbsp;&nbsp;</c:forEach>
+                <!-- 댓글은 댓글 아이콘 부착하기 -->
+                <c:if test="${free.depth != 0}">
+                  <i class="fa-brands fa-replyd"></i>
+                </c:if>
+                <!-- 게시글내용 -->
+                ${free.contents}
+                <!-- 댓글작성버튼 -->
+                <button type="button" class="btn_reply">댓글</button>
+                <!-- 게시글삭제버튼 -->
+                <form class="frm_remove" method="post" action="${contextPath}/free/remove.do" style="display: inline;">
+                  <c:if test="${free.email == sessionScope.user.email}">
+                  <input type="hidden" name="freeNo" value="${free.freeNo}">
+                  <button type="submit">삭제</button>
+                  </c:if>
+                </form>
+              </td>
+              <td>${free.createdAt}</td>
+            </c:if>
+            
+            <!-- 삭제된 게시글 -->
+            <c:if test="${free.status == 0}">
+              <td colspan="3">
+                삭제된 게시글입니다.
+              </td>
+            </c:if>
           </tr>
           <tr class="blind write_tr">
             <td colspan="4">
@@ -80,6 +102,16 @@
         </tr>
       </tfoot>
     </table>
+    <div>
+      <form method="get" action="${contextPath}/free/search.do">
+        <select name="column" >
+          <option value="EMAIL">작성자</option>
+          <option value="CONTENTS">내용</option>
+        </select>
+        <input type="text" name="query" placeholder="검색어 입력">
+        <button type="submit" class="btn btn-outline-secondary">검색</button>
+     </form>
+    </div>
   </div>
 
 </div>
@@ -132,6 +164,29 @@
 	  }
 	}
   }
+
+  const fnRemove = () => {
+	$('.frm_remove').submit((ev) => {
+	  if(!confirm('게시글을 삭제할까요?')){
+		ev.preventDefault();
+		return;
+	  } 
+	})
+	
+  }
+  
+  const fnRemoveResult = () => {
+	let removeResult = '${removeResult}';
+	if(removeResult !== ''){
+	  if(removeResult === '1'){
+		alert('게시글이 삭제되었습니다.');
+	  } else {
+		alert('게시글이 삭제되지 않았습니다.');
+	  }
+	}
+  }
+  
+  
   
   
   
@@ -139,6 +194,8 @@
   fnAddResult();
   fnBlind();
   fnAddReplyResult();
+  fnRemoveResult();
+  fnRemove();
 
 </script>
 

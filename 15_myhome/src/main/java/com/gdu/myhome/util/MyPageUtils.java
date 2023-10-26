@@ -21,6 +21,7 @@ public class MyPageUtils {
   private int beginPage;        // 한 블록에 표시되는 페이지의 시작 번호(계산한다.)
   private int endPage;          // 한 블록에 표시되는 페이지의 종료 번호(계산한다.)
   
+  
   public void setPaging(int page, int total, int display) {
     
     /* 한 페이지를 나타낼 때 필요한 정보 */
