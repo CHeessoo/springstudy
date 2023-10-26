@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.staff.dto.StaffDto;
 import com.gdu.staff.service.StaffService;
@@ -25,14 +26,16 @@ public class StaffController {
     return staffService.registerStaff(staff);
   }
   
-  @GetMapping(value="/staff/list.json", produces="application/json")
-  public ResponseEntity<Map<String, Object>> staffList() {
-    return null;
+  @ResponseBody
+  @GetMapping(value="/list.json", produces="application/json")
+  public Map<String, Object> staffList(HttpServletRequest request){
+    return staffService.staffList(request);
   }
   
-  @GetMapping(value="/staff/query.json", produces="application/json")
-  public ResponseEntity<Map<String, Object>> getStaff(HttpServletRequest request){
-    return staffService.getStaff(request);
+  @GetMapping(value="/query.json", produces="application/json")
+  public Map<String, Object> getStaffOne(HttpServletRequest request){
+    
+    return null;
   }
   
 }

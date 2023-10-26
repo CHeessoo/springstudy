@@ -1,6 +1,7 @@
 package com.gdu.staff.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.staff.dao.StaffMapper;
 import com.gdu.staff.dto.StaffDto;
@@ -20,6 +20,18 @@ import lombok.RequiredArgsConstructor;
 public class StaffServiceImple implements StaffService {
 
   private final StaffMapper staffMapper;
+  
+  @Override
+  public Map<String, Object> staffList(HttpServletRequest request) {
+    Map<String, Object> map = Map.of("list", staffMapper.getStaffList());
+    return map;
+  }
+  
+  @Override
+  public Map<String, Object> getStaffOne(HttpServletRequest request) {
+    Map<String, Object> map = Map.of("sno", request.getParameter("sno"));
+    return null;
+  }
   
   @Override
   public ResponseEntity<Map<String, Object>> registerStaff(StaffDto staff) {
@@ -35,15 +47,5 @@ public class StaffServiceImple implements StaffService {
     } 
   }
   
-  @Override
-  public ResponseEntity<Map<String, Object>> getStaffList(StaffDto staff) {
-    return null;
-  }
-  
-  @Override
-  public ResponseEntity<StaffDto> getStaff(String sno) {
-    StaffDto staffDto = staffMapper.getStaff(sno);
-    return new ResponseEntity<>(staffDto, staffMapper.getStaff(sno));
-  }
   
 }

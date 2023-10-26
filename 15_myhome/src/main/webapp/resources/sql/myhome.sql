@@ -124,6 +124,7 @@ INSERT INTO ACCESS_T VALUES('user2@naver.com', TO_DATE('20220201', 'YYYYMMDD'));
                                                                                   -- 휴면 회원 (user3)
 COMMIT;
 
+-- 원글 입력
 INSERT INTO FREE_T VALUES (FREE_SEQ.NEXTVAL, 'user2@naver.com', '내용1', SYSTIMESTAMP, 1, 0, FREE_SEQ.CURRVAL, 0);
 INSERT INTO FREE_T VALUES (FREE_SEQ.NEXTVAL, 'user1@naver.com', '내용2', SYSTIMESTAMP, 1, 0, FREE_SEQ.CURRVAL, 0);
 INSERT INTO FREE_T VALUES (FREE_SEQ.NEXTVAL, 'user3@naver.com', '내용3', SYSTIMESTAMP, 1, 0, FREE_SEQ.CURRVAL, 0);
@@ -148,7 +149,7 @@ COMMIT;
 
 -- 쿼리 테스트
 
--- 1. 목록 (최근 작성 순으로 5 ~ 10)
+-- 1. 목록 (??? 순으로 5 ~ 10)
 
 -- 1) ROWNUM 가상 칼럼
 SELECT FREE_NO, EMAIL, CONTENTS, CREATED_AT, STATUS, DEPTH, GROUP_NO, GROUP_ORDER

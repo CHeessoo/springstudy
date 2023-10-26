@@ -50,18 +50,19 @@
 	  fnInit();
 	  $.ajax({
 		type: 'get',
-		url: '${contextPath}/staff/list.json',
+		url: '${contextPath}/list.json',
 		dataType: 'json',
 		success: (resData) => {
 		  $('#staff_list').empty();
-		  $.each(resData.staff, (i, elem) => {
+		  $.each(resData.list, () => {
 			var tr = '<tr>';
-			tr += '<td>' + ${elem.sno} + '</td>';
-			tr += '<td>' + ${elem.name} + '</td>';
-			tr += '<td>' + ${elem.dept} + '</td>';
-			tr += '<td>' + ${elem.salary} + '</td>';
+			tr += '<td>' + ${sno} + '</td>';
+			tr += '<td>' + ${name} + '</td>';
+			tr += '<td>' + ${dept} + '</td>';
+			tr += '<td>' + ${salary} + '</td>';
 			tr += '</tr>';
 			$('#staff_list').append(tr);
+		  console.log(resData);
 		  })
 		}
 	  })
@@ -73,11 +74,12 @@
 	$('#btn_query').click(() => {
 	  $.ajax({
 		type: 'get',
-		url: '${contextPath}/staff/query.json',
+		url: '${contextPath}/query.json',
 		data: 'query=' + $('#query').val(),
 		dataType: 'json',
 		success: (resData) => {
 		  $('#staff_list').empty();
+			tr += '<tr>';
 			tr += '<td>' + resData.sno + '</td>';
 			tr += '<td>' + resData.name + '</td>';
 			tr += '<td>' + resData.dept + '</td>';

@@ -38,4 +38,12 @@ public class FreeController {
     return "free/list";
   }
   
+  @PostMapping("/addReply.do")
+  public String addReply(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    int addReplyResult = freeService.addReply(request);
+    redirectAttributes.addFlashAttribute("addReplyResult", addReplyResult);
+    return "redirect:/free/list.do";
+  }
+  
+  
 }
