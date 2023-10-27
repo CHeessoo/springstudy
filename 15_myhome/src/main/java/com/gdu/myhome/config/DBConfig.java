@@ -25,7 +25,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @MapperScan(basePackages="com.gdu.myhome.dao")             // @Mapper를 찾을 패키지 위치
 @PropertySource(value="classpath:application.properties")  // @PropertySource를 가지고 프로퍼티를 읽으면 스프링이 자동으로 Environment값을 만들어서 객체(Bean)로 가지고 있음
 @Configuration
-public class AppConfig {
+public class DBConfig {
   
   @Autowired                // 스프링이 가지고있는 프로퍼티 객체(Bean)를 불러서 사용하기 위해 필요하다.
   private Environment env;  // field는 Null 값

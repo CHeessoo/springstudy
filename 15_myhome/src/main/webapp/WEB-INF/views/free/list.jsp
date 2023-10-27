@@ -22,7 +22,7 @@
 
   <div>
     <a href="${contextPath}/free/write.form">
-      <button type="button" class="btn btn-secondary">새글작성</button>
+      <button type="button" class="btn btn-info">새글작성</button>
     </a>
   </div>
   
@@ -55,12 +55,12 @@
                 <!-- 게시글내용 -->
                 ${free.contents}
                 <!-- 댓글작성버튼 -->
-                <button type="button" class="btn_reply">댓글</button>
+                <button type="button" class="btn_reply btn btn-outline-primary">댓글</button>
                 <!-- 게시글삭제버튼 -->
                 <form class="frm_remove" method="post" action="${contextPath}/free/remove.do" style="display: inline;">
                   <c:if test="${free.email == sessionScope.user.email}">
                   <input type="hidden" name="freeNo" value="${free.freeNo}">
-                  <button type="submit">삭제</button>
+                  <button type="submit" class="btn btn-outline-primary">삭제</button>
                   </c:if>
                 </form>
               </td>
@@ -89,7 +89,7 @@
                   <input type="hidden" name="depth" value="${free.depth}">
                   <input type="hidden" name="groupNo" value="${free.groupNo}">
                   <input type="hidden" name="groupOrder" value="${free.groupOrder}">
-                  <button type="submit">댓글달기</button>
+                  <button type="submit" class="btn btn-outline-primary">댓글달기</button>
                </div>
               </form>
             </td>
@@ -109,7 +109,7 @@
           <option value="CONTENTS">내용</option>
         </select>
         <input type="text" name="query" placeholder="검색어 입력">
-        <button type="submit" class="btn btn-outline-secondary">검색</button>
+        <button type="submit" class="btn btn-outline-info">검색</button>
      </form>
     </div>
   </div>

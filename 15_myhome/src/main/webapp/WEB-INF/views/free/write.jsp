@@ -28,7 +28,7 @@
     
     
     <div>
-      <button type="submit">작성완료</button>
+      <button type="submit" class="btn btn-outline-dark">작성완료</button>
     </div>
     
   </form>

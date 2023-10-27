@@ -44,7 +44,7 @@
     </div>
 
     <div>
-      <button type="submit">다음</button>
+      <button type="submit" class="btn btn-outline-secondary">다음</button>
     </div>
     
   </form>

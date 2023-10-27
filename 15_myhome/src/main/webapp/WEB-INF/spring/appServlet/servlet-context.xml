@@ -14,6 +14,9 @@
   
   <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
   <resources mapping="/resources/**" location="/resources/" />
+  <!-- CKEditor에서 첨부한 이미지의 주소를 디렉터리 경로와 연결하는 태그 -->
+  <!-- location에 file://를 붙여줘야 외부 경로로 인식된다 (http://와 같은 역할) -->
+  <resources mapping="/blog/**"      location="file:///blog/" />
   
   <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,6 +33,7 @@
       <mapping path="/user/mypage.form"/>
       <mapping path="/user/modifyPw.form"/>
       <mapping path="/free/write.form"/>
+      <mapping path="/blog/write.form"/>
       <beans:bean class="com.gdu.myhome.intercept.RequiredLoginInterceptor" />
     </interceptor>
     

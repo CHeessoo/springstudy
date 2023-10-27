@@ -25,12 +25,12 @@
         <div>
           <label for="email">이메일</label>
           <input type="text" name="email" id="email">
-          <button type="button" id="btn_get_code">인증코드받기</button>
+          <button type="button" id="btn_get_code" class="btn btn-outline-secondary">인증코드받기</button>
           <span id="msg_email"></span> <%-- 이메일 테스트 후 결과 표시 위치 --%>
         </div>
         <div>
           <input type="text" id="code" placeholder="인증코드입력" disabled>
-          <button type="button" id="btn_verify_code" disabled>인증하기</button>
+          <button type="button" id="btn_verify_code" class="btn btn-outline-secondary" disabled >인증하기</button>
         </div>
       </div>
       
@@ -68,7 +68,7 @@
       
       <div>
         <input type="text" name="postcode" id="postcode" onclick="execDaumPostcode()" placeholder="우편번호" readonly>
-        <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+        <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary"><br>
         <input type="text" name="roadAddress" id="roadAddress" placeholder="도로명주소"readonly>
         <input type="text" name="jibunAddress" id="jibunAddress" placeholder="지번주소"readonly>
         <span id="guide" style="color:#999;display:none"></span>
@@ -136,7 +136,7 @@
       
       <div>
         <input type="hidden" name="event" value="${event}">
-        <button type="submit">회원가입하기</button>
+        <button type="submit" class="btn btn-outline-secondary">회원가입하기</button>
       </div>
       
     </form>
