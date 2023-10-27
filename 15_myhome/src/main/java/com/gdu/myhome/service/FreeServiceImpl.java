@@ -135,7 +135,7 @@ public class FreeServiceImpl implements FreeService {
     List<FreeDto> freeList = freeMapper.getSearchList(map);
     
     model.addAttribute("freeList", freeList);
-    model.addAttribute("paging", myPageUtils.getMvcPaging(request.getContextPath() + "/free/list.do"));
+    model.addAttribute("paging", myPageUtils.getMvcPaging(request.getContextPath() + "/free/search.do", "column=" + column + "&query=" + query));
     model.addAttribute("beginNo", total - (page - 1) * display);
     
   }
