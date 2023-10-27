@@ -36,17 +36,22 @@
   </insert>
   
   <insert id="insertBlogImage" parameterType="BlogImageDto">
-  INSERT INTO BLOG_IMAGE_T (
-      BLOG_NO
-    , IMAGE_PATH
-    , FILESYSTEM_NAME
-  ) VALUES (
-      #{blogNo}
-    , #{imagePath}
-    , #{filesystemName}
-  )
-  
+    INSERT INTO BLOG_IMAGE_T (
+        BLOG_NO
+      , IMAGE_PATH
+      , FILESYSTEM_NAME
+    ) VALUES (
+        #{blogNo}
+      , #{imagePath}
+      , #{filesystemName}
+    )
   </insert>
+  
+  <select id="getBlogImageInYesterday" resultType="BlogImageDto">
+    SELECT BLOG_NO, IMAGE_PATH, FILESYSTEM_NAME
+      FROM BLOG_IMAGE_T
+     WHERE IMAGE_PATH = '/blog/' || TO_CHAR(SYSDATE - 1, 'YYYY/MM/DD')
+  </select>
 
  
 </mapper>

@@ -19,7 +19,7 @@
       <h1>마이페이지</h1>
       
       <div>
-        <button type="button" id="btn_modify_pw">비밀번호변경</button>
+        <button type="button" id="btn_modify_pw" class="btn btn-secondary">비밀번호변경</button>
       </div>
       
       <div>이메일 : ${sessionScope.user.email}</div>
@@ -51,8 +51,8 @@
       </div>
       
       <div>
-        <input type="text" name="postcode" id="postcode" onclick="execDaumPostcode()" placeholder="우편번호" readonly value="${sessionScope.user.postcode}">
-        <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+        <input type="text" name="postcode" id="postcode" onclick="execDaumPostcode()" placeholder="우편번호" readonly value="${sessionScope.user.postcode}" >
+        <input type="button" onclick="execDaumPostcode()" class="btn btn-secondary" value="우편번호 찾기"><br>
         <input type="text" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly value="${sessionScope.user.roadAddress}">
         <input type="text" name="jibunAddress" id="jibunAddress" placeholder="지번주소" readonly value="${sessionScope.user.jibunAddress}">
         <span id="guide" style="color:#999;display:none"></span>
@@ -133,8 +133,8 @@
       
       <div>
         <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
-        <button type="button" id="btn_modify">개인정보수정</button>
-        <button type="button" id="btn_leave">회원탈퇴</button>
+        <button type="button" id="btn_modify" class="btn btn-secondary">개인정보수정</button>
+        <button type="button" id="btn_leave" class="btn btn-outline-secondary">회원탈퇴</button>
       </div>
       
     </form>

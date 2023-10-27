@@ -32,7 +32,14 @@ public class MyFileUtils {
     }
    
     return UUID.randomUUID().toString().replace("-", "") + "." + extName;  // UUID는 생성될 때 (-)하이픈이 계속 들어가기 때문에 replace를 이용해서 빈문자열로 바꿔줌
-    
+  }
+  
+  
+  // 블로그 이미지가 저장된 어제 경로를 반환
+  public String getBlogImagePathYesterday() {
+    LocalDate date = LocalDate.now();
+    date = date.minusDays(1);  // 1일 전
+    return "/blog/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(date);
   }
   
 }

@@ -21,8 +21,8 @@
     <h1>약관 동의하기</h1>
     
     <div>
-      <input type="checkbox" id="chk_all">
-      <label for="chk_all">모두 동의합니다</label>
+      <input type="checkbox" id="chk_all" >
+      <label for="chk_all" >모두 동의합니다</label>
     </div>
     
     <hr>
