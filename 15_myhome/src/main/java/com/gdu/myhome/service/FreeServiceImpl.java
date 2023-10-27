@@ -109,6 +109,7 @@ public class FreeServiceImpl implements FreeService {
     return freeMapper.deleteFree(freeNo);
   }
   
+  @Transactional(readOnly=true)
   @Override
   public void loadSearchList(HttpServletRequest request, Model model) {
     
