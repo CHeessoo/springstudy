@@ -37,6 +37,14 @@
       <input type="hidden" name="blogNo" value="${blog.blogNo}">
       <button type="button" id="btn_comment_add" class="btn btn-warning">작성완료</button>
     </form>
+  </div>
+  
+  <!-- 블로그 댓글 목록 -->
+  <div style="width: 100%; border-bottom: 1px solid gray;"></div>
+  <div id="comment_list"></div>
+  <div id="paging"></div>
+  
+  
     <script>
       const fnRequiredLogin = () => {
   	    // 로그인을 안 하고 작성을 시도하면 로그인 페이지로 보내기
@@ -63,6 +71,7 @@
     		success: (resData) => {  // {"addCommentResult": 1}
     		  if(resData.addCommentResult === 1){
     			alert('댓글이 등록되었습니다.');
+    			$('#contents').val('');
     			fnCommentList();
     		  }
     		}
@@ -74,31 +83,57 @@
       var page = 1;
       
       const fnCommentList = () => {
-    	$.ajax({
-    	  // 요청
-    	  type: 'get',
-    	  url: '${contextPath}/blog/commentList.do',
-    	  data: 'page=' + page + '&blogNo=${blog.blogNo}', 
-    	  // 응답
-    	  dataType: 'json',
-    	  success: (resData) => {  // resData = {"commentList": [], "paging": "<div>...</div>"}
-    		console.log(resData);
-    	  }
-    	})
+          $.ajax({
+            // 요청
+            type: 'get',
+            url: '${contextPath}/blog/commentList.do',
+            data: 'page=' + page + '&blogNo=${blog.blogNo}',
+            // 응답
+            dataType: 'json',
+            success: (resData) => {  // resData = {"commentList": [], "paging": "<div>...</div>"}
+            	$('#comment_list').empty();
+            	$('#paging').empty();
+              if(resData.commentList.length === 0){
+            	  $('#comment_list').text('첫 번째 댓글의 주인공이 되어 보세요');
+            	  $('#paging').text('');
+            	  return;
+              }
+              $.each(resData.commentList, (i, c) => {
+            	  let str = '';
+            	  if(c.depth === 0){
+            		  str += '<div style="width: 100%; border-bottom: 1px solid gray;">';
+            	  } else {
+            		  str += '<div style="width: 100%; border-bottom: 1px solid gray; margin-left: 32px;">';
+            	  }
+            	  str += '  <div>' + c.userDto.name + '</div>';
+            	  str += '  <div>' + c.contents + '</div>';
+            	  str += '  <div style="font-size: 12px;">' + c.createdAt + '</div>';
+            	  str += '</div>';
+            	  $('#comment_list').append(str);
+              })
+              $('#paging').append(resData.paging);  // fnAjaxPaging() 함수가 호출되는 곳
+            }
+          })
+        }
+      
+      const fnAjaxPaging = (p) => {
+    	page = p;
+    	fnCommentList();
       }
       
       fnRequiredLogin();
       fnCommentAdd();
       fnCommentList();
       
+      /*
+      <div style="width: 100px; bordr-bottom: 1px sloid gray;">
+      <div>이름</div>
+	  <div>내용</div>
+	  <div style="font-size: 12px;">작성일자</div>
+	  </div>
+	  */
+      
     </script>
-  </div>
-  
-  <!-- 블로그 댓글 목록 -->
-  <div id="comment_list"></div>
-  <script>
-	  
-  </script>
 
 </div>
 
