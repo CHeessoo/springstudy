@@ -74,5 +74,11 @@ public class BlogController {
     return blogService.addComment(request);
   }
   
+  @ResponseBody
+  @GetMapping(value="/commentList.do", produces="application/json")
+  public Map<String, Object> commentList(HttpServletRequest request){
+    return blogService.loadCommentList(request);
+  }
+  
   
 }

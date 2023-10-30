@@ -13,11 +13,11 @@ public class CommentDto {
 
   private int commentNo;
   private String contents;
-  private int userNo;        // 사용자와 관계를 userNo로 줌
   private int blogNo;
   private String createdAt;
   private int status;
   private int depth;
   private int groupNo;
+  private UserDto userDto; // private int userNo; // 사용자와 관계를 userNo로 줌
   
 }

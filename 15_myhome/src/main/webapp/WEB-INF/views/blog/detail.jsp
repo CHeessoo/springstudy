@@ -60,15 +60,36 @@
     		data: $('#frm_comment_add').serialize(),
     		// 응답
     		dataType: 'json',
-    		success: (resData) => {
-    		  console.log(resData);
+    		success: (resData) => {  // {"addCommentResult": 1}
+    		  if(resData.addCommentResult === 1){
+    			alert('댓글이 등록되었습니다.');
+    			fnCommentList();
+    		  }
     		}
     	  })
     	})
       }
       
+      // 전역 변수
+      var page = 1;
+      
+      const fnCommentList = () => {
+    	$.ajax({
+    	  // 요청
+    	  type: 'get',
+    	  url: '${contextPath}/blog/commentList.do',
+    	  data: 'page=' + page + '&blogNo=${blog.blogNo}', 
+    	  // 응답
+    	  dataType: 'json',
+    	  success: (resData) => {  // resData = {"commentList": [], "paging": "<div>...</div>"}
+    		console.log(resData);
+    	  }
+    	})
+      }
+      
       fnRequiredLogin();
       fnCommentAdd();
+      fnCommentList();
       
     </script>
   </div>

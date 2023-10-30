@@ -18,4 +18,5 @@ public interface BlogService {
   public BlogDto getBlog(int blogNo);
   
   public Map<String, Object> addComment(HttpServletRequest request);
+  public Map<String, Object> loadCommentList(HttpServletRequest request);
 }
