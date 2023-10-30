@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.gdu.myhome.dao.BlogMapper;
 import com.gdu.myhome.dto.BlogDto;
 import com.gdu.myhome.dto.BlogImageDto;
+import com.gdu.myhome.dto.CommentDto;
 import com.gdu.myhome.dto.UserDto;
 import com.gdu.myhome.util.MyFileUtils;
 import com.gdu.myhome.util.MyPageUtils;
@@ -163,6 +164,37 @@ public class BlogServiceImple implements BlogService {
     model.addAttribute("beginNo", total - (page - 1) * disply);
     
   }
+  
+  
+  @Override
+  public int increseHit(int blogNo) {
+    return blogMapper.updateHit(blogNo);
+  }
+  
+  @Override
+  public BlogDto getBlog(int blogNo) {
+    return blogMapper.getBlog(blogNo);
+  }
+  
+  @Override
+  public Map<String, Object> addComment(HttpServletRequest request) {
+    
+    String contents = request.getParameter("contents");
+    int userNo = Integer.parseInt(request.getParameter("userNo"));
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    
+    CommentDto comment = CommentDto.builder()
+                          .contents(contents)
+                          .userNo(userNo)
+                          .blogNo(blogNo)
+                          .build();
+    
+    int addCommentResult = blogMapper.insertComment(comment);
+    
+    return Map.of("addCommentResult", addCommentResult);
+    
+  }
+  
   
 }
 

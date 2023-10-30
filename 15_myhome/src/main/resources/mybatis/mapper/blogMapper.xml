@@ -91,6 +91,41 @@
                 ON B.USER_NO = U.USER_NO) A
      WHERE A.RN BETWEEN #{begin} AND #{end}
   </select>
+  
+  <update id="updateHit" parameterType="int">
+    UPDATE BLOG_T
+       SET HIT = HIT + 1
+     WHERE BLOG_NO = #{blogNo}  
+  </update>
+  
+  <select id="getBlog" parameterType="int" resultMap="BlogMap">
+    SELECT B.BLOG_NO, B.TITLE, B.CONTENTS, B.HIT, B.IP, B.CREATED_AT, B.MODIFIED_AT, U.USER_NO, U.EMAIL, U.NAME
+      FROM USER_T U, BLOG_T B
+     WHERE U.USER_NO = B.USER_NO
+       AND B.BLOG_NO = #{blogNo}
+  </select>
+  
+  <insert id="insertComment" parameterType="CommentDto">
+    INSERT INTO COMMENT_T (
+        COMMENT_NO
+      , CONTENTS
+      , USER_NO
+      , BLOG_NO
+      , CREATED_AT
+      , STATUS
+      , DEPTH
+      , GROUP_NO
+    ) VALUES (
+        COMMENT_SEQ.NEXTVAL
+      , #{contents}
+      , #{userNo}
+      , #{blogNo}
+      , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH:MI:SS')
+      , 1
+      , 0
+      , COMMENT_SEQ.CURRVAL
+    )
+  </insert>
 
  
 </mapper>
