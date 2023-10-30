@@ -22,7 +22,33 @@
   <hr>
   
   <div>
-    이곳은 블로그 목록
+    <table border="1">
+      <thead>
+        <tr>
+          <td>순번</td>
+          <td>제목</td>
+          <td>조회수</td>
+          <td>작성자</td>
+          <td>작성일자</td>
+        </tr>
+      </thead>
+     <tbody>
+      <c:forEach items="${blogList}" var="b" varStatus="vs">
+        <tr>
+          <td>${beginNo - vs.index}</td>
+          <td>${b.title}</td>
+          <td>${b.hit }</td>
+          <td>${b.userDto.email}</td>
+          <td>${b.createdAt}</td>
+        </tr>
+      </c:forEach>
+     </tbody>
+     <tfoot>
+      <tr>
+        <td colspan="5">${paging}</td>
+      </tr>
+     </tfoot>
+    </table>
   </div>
     
 </div>

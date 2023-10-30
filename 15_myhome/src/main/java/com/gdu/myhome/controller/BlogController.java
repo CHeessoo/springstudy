@@ -26,7 +26,7 @@ public class BlogController {
 
   @GetMapping("/list.do")
   public String list(HttpServletRequest request, Model model) {
-    
+    blogService.loadBlogList(request, model);
     return "blog/list";
   }
   

@@ -13,15 +13,13 @@
 </style>
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
+</head>
+<body>
 
 
   <h1>Hello Wolrd!</h1>
-  <a href="${contextPath}/bbs/list.do">게시판</a>
+  <a href="${contextPath}/list.do">게시판</a>
   
-
-  
-
 
 
 </body>

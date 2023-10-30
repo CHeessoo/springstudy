@@ -159,7 +159,23 @@ INSERT INTO FREE_T VALUES (FREE_SEQ.NEXTVAL, 'user1@naver.com', '내용19', SYST
 INSERT INTO FREE_T VALUES (FREE_SEQ.NEXTVAL, 'user1@naver.com', '내용20', SYSTIMESTAMP, 1, 0, FREE_SEQ.CURRVAL, 0);
 COMMIT;
 
--- 쿼리 테스트
+
+-- 블로그 쿼리 테스트
+
+-- 1. 목록(사용자 - 블로그 조인)
+-- 부목 : 일대다 관계에서 일(PK, UNIQUE) - 사용자
+-- 자식 : 일대다 관계에서 다(FK)         - 블로그
+
+-- 내부 : 사용자와 블로그에 모두 존재하는 데이터를 조인하는 방식
+-- 외부 : 사용자가 없는 블로그도 모두 조인하는 방식 (불가능)
+--        블로그가 없는 사용자도 모두 조인하는 방식 (필요 없는 방식)
+SELECT B.BLOG_NO, B.TITLE, B.CONTENTS, B.USER_NO, B.HIT, B.IP, B.CREATED_AT, B.MODIFIED_AT, U.EMAIL
+  FROM USER_T U INNER JOIN BLOG_T B
+    ON U.USER_NO = B.USER_NO
+ WHERE USER_NO = 1;
+
+
+-- 계층 쿼리 테스트
 
 -- 1. 목록 (??? 순으로 5 ~ 10)
 
@@ -195,7 +211,7 @@ SELECT FREE_NO, EMAIL, CONTENTS, CREATED_AT, STATUS, DEPTH, GROUP_NO, GROUP_ORDE
 
 
 
--- 쿼리 테스트
+-- 사용자 쿼리 테스트
 
 -- 1. 로그인 할 때(이메일, 비밀번호 입력)
 -- 1) 정상 회원

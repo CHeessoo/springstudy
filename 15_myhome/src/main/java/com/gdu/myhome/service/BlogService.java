@@ -4,9 +4,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface BlogService {
   public Map<String, Object> imageUpload(MultipartHttpServletRequest multipartRequest);
   public int addBlog(HttpServletRequest request);
+  public void blogImageBatch();
+  public void loadBlogList(HttpServletRequest request, Model model);
 }

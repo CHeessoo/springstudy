@@ -48,4 +48,25 @@ public class BbsServiceImpl implements BbsService {
     model.addAttribute("total", total);
   }
   
+  @Override
+  public BbsDto getBbs(int bbsNo) {
+    BbsDto bbs = bbsMapper.getBbs(bbsNo);
+    return bbs;
+  }
+  
+  @Override
+  public int addBbs(BbsDto bbs) {
+    return bbsMapper.insertBbs(bbs);
+  }
+  
+  @Override
+  public int modifyBbs(BbsDto bbs) {
+    return bbsMapper.updateBbs(bbs);
+  }
+  
+  @Override
+  public int removeBbs(int bbsNo) {
+    return bbsMapper.deleteBbs(bbsNo);
+  }
+  
 }
