@@ -138,10 +138,17 @@
          , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH:MI:SS')
      WHERE BLOG_NO = #{blogNo}
   </update>
+
   
   <delete id="deleteBlog" parameterType="int">
     DELETE
       FROM BLOG_T
+     WHERE BLOG_NO = #{blogNo}
+  </delete>
+  
+  <delete id="deleteImage" parameterType="int">
+    DELETE 
+      FROM BLOG_IMAGE_T
      WHERE BLOG_NO = #{blogNo}
   </delete>
   

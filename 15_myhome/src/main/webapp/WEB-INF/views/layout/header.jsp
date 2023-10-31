@@ -40,7 +40,7 @@
         <li><a href="${contextPath}/free/list.do">계층게시판</a></li>
         <li><a href="${contextPath}/blog/list.do">댓글형게시판</a></li>
         <li><a href="${contextPath}">첨부게시판</a></li>
-        <li><a href="${contextPath}/user/mypage.form">MY</a></li>
+        <li><a href="${contextPath}/user/mypage.form"><i class="fa-regular fa-user"></i></a></li>
       </ul>
     </div>
   </div>

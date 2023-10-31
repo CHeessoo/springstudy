@@ -10,6 +10,17 @@
   <jsp:param value="${blog.blogNo}번 블로그" name="title"/>
 </jsp:include>
 
+<style>
+
+  .blind {
+    display: none;
+  }
+  .icon_remove_comment{
+    cursor: pointer;
+  }
+
+</style>
+
 
 <div>
 
@@ -78,9 +89,21 @@
   
   
     <script>
-      const fnRequiredLogin = () => {
-  	    // 로그인을 안 하고 작성을 시도하면 로그인 페이지로 보내기
-  	    $('#contents, #btn_comment_add').click(() => {
+    
+    const fnContentsClick = () => {
+  	  $('#contents').click(() => {
+        if('${sessionScope.user}' === ''){
+          if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
+            location.href = '${contextPath}/user/login.form';
+          } else {
+            return;
+          }
+        }
+  	  })
+    }
+      
+      const fnCommentAdd = () => {
+    	$('#btn_comment_add').click(() => {
   		  if('${sessionScope.user}' === ''){
   		    if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
   			  location.href = '${contextPath}/user/login.form';
@@ -88,11 +111,6 @@
   			  return;
   		    }
   		  }
-  	    })
-      }
-      
-      const fnCommentAdd = () => {
-    	$('#btn_comment_add').click(() => {
     	  $.ajax({
     		// 요청
     		type: 'post',
@@ -133,31 +151,37 @@
               $.each(resData.commentList, (i, c) => {
             	  let str = '';
             	  if(c.depth === 0){
-            		  str += '<div style="width: 100%; border-bottom: 1px solid gray;">';
+            		str += '<div style="width: 100%; border-bottom: 1px solid gray;">';
             	  } else {
-            		  str += '<div style="width: 100%; border-bottom: 1px solid gray; margin-left: 32px;">';
+            		str += '<div style="width: 100%; border-bottom: 1px solid gray; margin-left: 32px;">';
             	  }
-            	  str += '  <div>' + c.userDto.name + '</div>';
-            	  str += '  <div>' + c.contents + '</div>';
-            	  str += '  <div style="font-size: 12px;">' + c.createdAt + '</div>';
-            	  if(c.depth === 0){
-            	  	str += '  <div><button type="button" class="btn_open_reply btn btn-outline-secondary">답글달기</button></div>';
+            	  if(c.status === 0) {
+            		str += '<div>삭제된 댓글입니다.</div>';
+            	  } else {
+            	    str += '  <div>' + c.userDto.name + '</div>';
+            	    str += '  <div>' + c.contents + '</div>';
+            	    str += '  <div style="font-size: 12px;">' + c.createdAt + '</div>';
+            	    if(c.depth === 0){
+            	  	  str += '  <div><button type="button" class="btn_open_reply btn btn-outline-secondary">답글달기</button></div>';
+            	    }
+              	    /*********************** 답글 입력 창 ***********************/
+              	    str += '  <div class="blind frm_add_reply_wrap">';
+              	    str += '    <form class="frm_add_reply">';
+              	    str += '      <textarea rows="3" cols="50" name="contents" placeholder="답글을 입력하세요"></textarea>';
+              	    str += '      <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">';
+              	    str += '      <input type="hidden" name="blogNo" value="${blog.blogNo}">';
+              	    str += '      <input type="hidden" name="groupNo" value="' + c.groupNo + '">';
+              	    str += '      <button type="button" class="btn_add_replay btn btn-secondary btn-sm">답글작성완료</button>';
+              	    str += '    </from>';
+              	    str += '  </div>';
+              	    /************************************************************/
+              	    if('${sessionScope.user.userNo}' == c.userDto.userNo){
+              	      str += '  <div>';
+              	      str += '    <input type="hidden" value="' + c.commentNo + '">';
+              	      str += '    <i class="fa-regular fa-circle-xmark icon_remove_comment d-md-flex justify-content-md-end" ></i>';
+              	      str += '  </div>';
+              	    }
             	  }
-              	  /*********************** 답글 입력 창 ***********************/
-              	  str += '  <div class="blind">';
-              	  str += '    <form class="frm_add_reply">';
-              	  str += '      <textarea rows="3" cols="50" name="contents" placeholder="답글을 입력하세요"></textarea>';
-              	  str += '      <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">';
-              	  str += '      <input type="hidden" name="blogNo" value="${blog.blogNo}">';
-              	  str += '      <input type="hidden" name="groupNo" value="' + c.groupNo + '">';
-              	  str += '      <button type="button" class="btn_add_replay btn btn-secondary btn-sm">답글작성완료</button>';
-              	  str += '    </from>';
-              	  str += '  </div>';
-              	  /************************************************************/
-              	  str += '  <div>';
-              	  str += '    <input type="hidden" value="' + c.commentNo + '">';
-              	  str += '    <button type="button" class="btn_remove_comment btn btn-secondary btn-sm">삭제</button>';
-              	  str += '  </div>';
             	  str += '</div>';
             	  $('#comment_list').append(str);
               })
@@ -171,16 +195,34 @@
     	fnCommentList();
       }
       
+      const fnBlind = () => {
+      	$(document).on('click', '.btn_open_reply', (ev) => {
+          if('${sessionScope.user}' === ''){
+            if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
+              location.href = '${contextPath}/user/login.form';
+            } else {
+              return;
+            }
+          }
+          var blindTarget = $(ev.target).parent().next();
+          if(blindTarget.hasClass('blind')){
+          	$('.frm_add_reply_wrap').addClass('blind');  // 모든 답글 입력화면 닫기
+          	blindTarget.removeClass('blind');            // 답글 입력화면 열기
+          } else {
+          	blindTarget.addClass('blind');
+          }
+      	})
+      }
+      
       const fnCommentReplyAdd = () => {
     	$(document).on('click', '.btn_add_replay', (ev) => {
-    	  // 로그인 여부 확인
-    	  if('${sessionScope.user.userNo}' === ''){
-    		if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
-    		  location.href = '${contextPath}/user/login.form';
-    		} else {
-    		  return;
-    		}
-    	  } 
+		  if('${sessionScope.user}' === ''){
+  		    if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){
+  			  location.href = '${contextPath}/user/login.form';
+  		    } else {
+  			  return;
+  		    }
+	  	  }
     	  var frmAddReply = $(ev.target).closest('.frm_add_reply');
     	  $.ajax({
     		// 요청
@@ -203,7 +245,7 @@
       }
       
       const fnCommentRemove = () => {
-    	$(document).on('click', '.btn_remove_comment', (ev) => {
+    	$(document).on('click', '.icon_remove_comment', (ev) => {
     	  if(!confirm('해당 댓글을 삭제하시겠습니까?')){
     		return;
     	  } else {
@@ -226,31 +268,38 @@
     	  }
     	})
       }
+
       
-      fnRequiredLogin();
+      fnContentsClick();
       fnCommentAdd();
       fnCommentList();
+      fnBlind();
       fnCommentReplyAdd();
       fnCommentRemove();
       
       /*
       <div style="width: 100px; bordr-bottom: 1px sloid gray;">
-      <div>이름</div>
-	  <div>내용</div>
-	  <div style="font-size: 12px;">작성일자</div>
-	  <div><button type="button" class="btn_open_reply">답글달기</button></div>
-	  <div class="blind">
+      
+      	// 삭제된 댓글/답글
+      	<div>삭제된 댓글입니다.</div>
+      
+      	// 정상 댓글/답글
+        <div>이름</div>
+	    <div>내용</div>
+	    <div style="font-size: 12px;">작성일자</div>
+	    <div><button type="button" class="btn_open_reply">답글달기</button></div>
+	    <div class="blind frm_add_reply_wrap">
 	  	  <form class="frm_add_reply">
 	  	    <textarea rows="3" cols="50" name="contents" placeholder="답글을 입력하세요"></textarea>
-	  	    <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
-	  	    <input type="hidden" name="blogNo" value="${blog.blogNo}">
-	  	    <input type="hidden" name="groupNo" value="c.groupNo">
+	  	    <input type="hidden" name="userNo" value="">
+	  	    <input type="hidden" name="blogNo" value="">
+	  	    <input type="hidden" name="groupNo" value="">
 	  	    <button type="button" class="btn_add_replay">답글작성완료</button>
 	  	  </from>
 	    </div>
 	    <div>
 	      <input type="hidden" value="commentNo값">
-	      <button type="button" class="btn_remove_comment" >삭제</button>
+	      <button type="button" class="icon_remove_comment" >삭제</button>
 	    </div>
 	  </div>
 	  */

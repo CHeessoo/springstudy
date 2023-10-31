@@ -21,6 +21,7 @@ public interface BlogMapper {
   public BlogDto getBlog(int blogNo);
   public int updateBlog(BlogDto blog);
   public int deleteBlog(int blogNo);
+  public int deleteImage(int blogNo);
   
   public int insertComment(CommentDto comment);
   public int getCommentCount(int blogNo);
