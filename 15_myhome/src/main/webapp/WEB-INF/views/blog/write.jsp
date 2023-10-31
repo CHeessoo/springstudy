@@ -23,7 +23,6 @@
 </style>
 <div>
 
-  <!-- 개인적으로 title 공백검사 script로 만들기(title이 공백이면 서브밋 막음) -->
   
   <form id="frm_blog_add" method="post" action="${contextPath}/blog/addBlog.do">
   
@@ -86,7 +85,18 @@
 	  });
 	}
   	
+  	$('#frm_blog_add').submit((ev) => {
+  	  let title = $('#title');
+  	  if(title.val() === ''){
+  		alert('제목은 필수입니다.');
+  		title.focus();
+  		ev.preventDefault();
+  		return;
+  	  }
+  	})
+  	
   	fnCkeditor();
+  
   
   </script>
 

@@ -25,5 +25,7 @@ public interface BlogMapper {
   public int insertComment(CommentDto comment);
   public int getCommentCount(int blogNo);
   public List<CommentDto> getCommentList(Map<String, Object> map);
+  public int insertCommentReply(CommentDto comment);
+  public int deleteComment(int commentNo);
 
 }

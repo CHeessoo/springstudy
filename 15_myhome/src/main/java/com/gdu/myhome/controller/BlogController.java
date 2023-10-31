@@ -103,6 +103,18 @@ public class BlogController {
     return blogService.loadCommentList(request);
   }
   
+  @ResponseBody
+  @PostMapping(value="/addCommentReply.do", produces="application/json")
+  public Map<String, Object> addCommentReply(HttpServletRequest request){
+    return blogService.addCommentReply(request);
+  }
+  
+  @ResponseBody
+  @PostMapping(value="/removeComment.do", produces="application/json")
+  public Map<String, Object> removeComment(@RequestParam(value="commentNo", required=false, defaultValue="0") int commentNo){
+    return blogService.removeComment(commentNo);
+  }
+  
   
   
 }
