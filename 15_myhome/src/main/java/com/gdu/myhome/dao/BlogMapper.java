@@ -13,12 +13,14 @@ import com.gdu.myhome.dto.CommentDto;
 public interface BlogMapper {
   
   public int insertBlog(BlogDto blog);
-  public int insertBlogImage(BlogImageDto blogImageDto);
+  public int insertBlogImage(BlogImageDto blogImage);
   public List<BlogImageDto> getBlogImageInYesterday();
   public int getBlogCount();
   public List<BlogDto> getBlogList(Map<String, Object> map);
   public int updateHit(int blogNo);
   public BlogDto getBlog(int blogNo);
+  public int updateBlog(BlogDto blog);
+  public int deleteBlog(int blogNo);
   
   public int insertComment(CommentDto comment);
   public int getCommentCount(int blogNo);

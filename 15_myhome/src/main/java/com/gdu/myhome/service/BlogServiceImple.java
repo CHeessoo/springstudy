@@ -178,6 +178,29 @@ public class BlogServiceImple implements BlogService {
   }
   
   @Override
+  public int modifyBlog(HttpServletRequest request) {
+    
+    String title = request.getParameter("title");
+    String contents = request.getParameter("contents");
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    
+    BlogDto blog = BlogDto.builder()
+                    .title(title)
+                    .contents(contents)
+                    .blogNo(blogNo)
+                    .build();
+    
+    int modifyResult = blogMapper.updateBlog(blog);
+    
+    return modifyResult;
+  }
+  
+  @Override
+  public int removeBlog(int blogNo) {
+    return blogMapper.deleteBlog(blogNo);
+  }
+  
+  @Override
   public Map<String, Object> addComment(HttpServletRequest request) {
     
     String contents = request.getParameter("contents");
