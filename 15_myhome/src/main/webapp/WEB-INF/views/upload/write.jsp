@@ -12,29 +12,30 @@
 
 
 <div>
-  <h1>Upload 게시글 작성하기</h1>
+  <h1 style="text-align: center;">Upload 게시글 작성하기</h1>
   <form method="post" action="${contextPath}/upload/add.do" enctype="multipart/form-data"> <!-- 첨부를 위해서 method, enctype 필수 -->
-    <div>
-      <label for="email">작성자</label>
-      <input type="text" id="email" value="${sessionScope.user.email}" readonly >
+    <div class="mb-3 row">
+      <label for="email" class="col-sm-2 col-form-label">작성자</label>
+      <div class="col-sm-10">
+        <input type="text" id="email" value="${sessionScope.user.email}" class="form-control-plaintext" readonly >
+      </div>
     </div>
     <div>
-      <label for="title">제목</label>
-      <input type="text" name="title" id="title" >
+      <label for="title" class="form-label">제목</label>
+      <input type="text" name="title" id="title" class="form-control border border-success" >
     </div>
     <div>
-      <label for="contents">내용</label>
-      <textarea rows="3" cols="50" name="contents" id="contents" ></textarea>
+      <label for="contents" class="form-label">내용</label>
+      <textarea rows="3" cols="50" name="contents" id="contents" class="form-control border border-success" ></textarea>
     </div>
     <div>
-      <label for="files">첨부</label>
-      <input type="file" name="files" id="files" multiple> <!-- multiple이 있어야 다중첨부 가능 -->
+      <label for="files" class="form-label">첨부</label>
+      <input type="file" name="files" id="files" class="form-control" multiple > <!-- multiple이 있어야 다중첨부 가능 -->
     </div>
-    <div>
+    <div >
       <input type="hidden" name="userNo" value="${sessionScope.user.userNo}" >
-      <button type="submit">작성완료</button>
+      <button type="submit" class="btn btn-outline-success col-12" style="margin: 32px auto;">작성완료</button>
     </div>
-    <div id="file_list"></div>
   </form>
   <div id="file_list"></div>
 </div>
@@ -43,12 +44,12 @@
 
   
   const fnFileCheck = () => {
-    $('#files').change((ev) => {      // 파일 첨부가 바뀌거나 새로 첨부를 했을때 사용하는 change이벤트
-      $('#file_list').empty();          // 이전 첨부했던 목록이 남아있지 않도록 첨부된 파일 목록 초기화
-      var maxSize = 1024 * 1024 * 100;  // 전체 파일 최대 크기 100MB
-      var maxSizePerFile = 1024 * 1024 * 10;
-      var totalSize = 0;
-      var files = ev.target.files;
+    $('#files').change((ev) => {              // 파일 첨부가 바뀌거나 새로 첨부를 했을때 사용하는 change이벤트
+      $('#file_list').empty();                // 이전 첨부했던 목록이 남아있지 않도록 첨부된 파일 목록 초기화
+      let maxSize = 1024 * 1024 * 100;        // 전체 파일 최대 크기 100MB
+      let maxSizePerFile = 1024 * 1024 * 10;  // 개별 파일 최대 크기 10MB
+      let totalSize = 0;
+      let files = ev.target.files;
       for(let i = 0; i < files.length; i++){
         totalSize += files[i].size;
         if(files[i].size > maxSizePerFile){  // files[i].size : 개별 파일 크기
