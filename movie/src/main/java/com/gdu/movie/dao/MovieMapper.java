@@ -9,6 +9,7 @@ import com.gdu.movie.dto.MovieDto;
 @Mapper
 public interface MovieMapper {
   
+  public int getMovieCount();
   public List<MovieDto> getMovieList();
 
 }
