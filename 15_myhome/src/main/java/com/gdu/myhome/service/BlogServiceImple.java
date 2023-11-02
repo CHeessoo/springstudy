@@ -192,25 +192,25 @@ public class BlogServiceImple implements BlogService {
     
     int modifyResult = blogMapper.updateBlog(blog);
     
-    // 수정되는 이미지 정보 전달
-    Document document = Jsoup.parse(contents);
-    Elements elements = document.getElementsByTag("img");
-    if(elements != null) {
-      for(Element element : elements) {
-        String src = element.attr("src");
-        String filesystemName = src.substring(src.lastIndexOf("/") + 1);
-        if(filesystemName != null) {
-          BlogImageDto blogImage = BlogImageDto.builder()
-              .blogNo(blogNo)
-              .imagePath(myFileUtils.getBlogImagePath())
-              .filesystemName(filesystemName)
-              .build();
-          blogMapper.insertBlogImage(blogImage); 
-        } else {
-          // 기존에 넣어놨던 이미지랑, 삭제하는 이미지는.. 어케함?
-        }
-      } 
-    } 
+//    // 수정되는 이미지 정보 전달
+//    Document document = Jsoup.parse(contents);
+//    Elements elements = document.getElementsByTag("img");
+//    if(elements != null) {
+//      for(Element element : elements) {
+//        String src = element.attr("src");
+//        String filesystemName = src.substring(src.lastIndexOf("/") + 1);
+//        if(filesystemName != null) {
+//          BlogImageDto blogImage = BlogImageDto.builder()
+//              .blogNo(blogNo)
+//              .imagePath(myFileUtils.getBlogImagePath())
+//              .filesystemName(filesystemName)
+//              .build();
+//          blogMapper.insertBlogImage(blogImage); 
+//        } else {
+//          // 기존에 넣어놨던 이미지랑, 삭제하는 이미지는.. 어케함?
+//        }
+//      } 
+//    } 
     
     return modifyResult;
   }

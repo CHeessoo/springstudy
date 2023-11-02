@@ -15,6 +15,6 @@ public class AttachDto {
   private String originalFilename;
   private String filesystemName;
   private int downloadCount;
-  private int hasThumnail;
+  private int hasThumbnail;
   private int uploadNo;
 }

@@ -12,7 +12,7 @@
 
 
 <div>
-  <h1 style="text-align: center;">Upload 게시글 작성하기</h1>
+  <h1 style="text-align: center; color: darkgreen;">Upload 게시글 작성하기</h1>
   <form method="post" action="${contextPath}/upload/add.do" enctype="multipart/form-data"> <!-- 첨부를 위해서 method, enctype 필수 -->
     <div class="mb-3 row">
       <label for="email" class="col-sm-2 col-form-label">작성자</label>
