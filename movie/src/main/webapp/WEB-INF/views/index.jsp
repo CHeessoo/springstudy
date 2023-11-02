@@ -74,7 +74,32 @@
   	
   	const fnMovieSearch = () => {
   	  $('#btn_search').click(() => {
-  		$.ajax 
+  		$.ajax({
+  		  type: 'post',
+  		  url: '${contextPath}/searchMovie',
+  		  data: $('#frm_search').serialize(),
+  		  dataType: 'json',
+  		  success: (resData) => {
+  			alert(resData.message);
+  			$('#movie_list').empty();
+  			if(resData.list === null){
+    		  let str = '<tr>';
+    		  str += '<td colspan="4">검색 결과가 없습니다.</td>';
+    		  str += '</tr>';
+    		  $('#movie_list').append(str);
+    		  return;
+  			}
+  			$.each(resData.list, (i, movie) => {
+    		  let str = '<tr>';
+    		  str += '<td>' + movie.title + '</td>';
+    		  str += '<td>' + movie.genre + '</td>';
+    		  str += '<td>' + movie.description + '</td>';
+    		  str += '<td>' + movie.star + '</td>';
+    		  str += '</tr>';
+    		  $('#movie_list').append(str);
+  			})
+  		  }
+  		})
   	  })
   	}
   	

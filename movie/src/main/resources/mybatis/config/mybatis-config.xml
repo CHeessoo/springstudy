@@ -13,7 +13,7 @@
   
   <!-- 별명 만들기 -->
   <typeAliases>
-    <typeAlias alias="MovietDto" type="com.gdu.movie.dto.MovieDto"/>
+    <typeAlias alias="MovieDto" type="com.gdu.movie.dto.MovieDto"/>
   </typeAliases>
   
 </configuration>

@@ -16,6 +16,19 @@
       FROM MOVIE
      ORDER BY NO ASC
   </select>
+  
+  <select id="getSearchCount" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+      FROM MOVIE
+     WHERE ${column} LIKE '%' || #{searchText} || '%'
+  </select>
+  
+  <select id="getSearchMovie" parameterType="Map" resultType="MovieDto">
+    SELECT NO, TITLE, GENRE, DESCRIPTION, STAR
+      FROM MOVIE
+     WHERE ${column} LIKE '%' || #{searchText} || '%'
+     ORDER BY NO ASC
+  </select>
 
 </mapper>
   

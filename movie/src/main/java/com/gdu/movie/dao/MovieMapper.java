@@ -1,6 +1,7 @@
 package com.gdu.movie.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +12,7 @@ public interface MovieMapper {
   
   public int getMovieCount();
   public List<MovieDto> getMovieList();
+  public int getSearchCount(Map<String, Object> map);
+  public List<MovieDto> getSearchMovie(Map<String, Object> map);
 
 }
