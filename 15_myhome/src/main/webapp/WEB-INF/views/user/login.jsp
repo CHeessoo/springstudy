@@ -16,6 +16,13 @@
   .login_form_wrap {
     width: 300px;
   }
+  .find_id_pw, .btn {
+    margin-top: 5px
+  }
+  .form-check-input, .form-check-label {
+    cursor: pointer;
+  }
+
 </style>
 
   <div class="login_form_wrap center_wrap">
@@ -31,12 +38,15 @@
       <div>
         <input type="hidden" name="referer" value="${referer}">
         <button type="submit" class="btn btn-outline-dark">로그인</button>
+        <div class="form-check form-switch">
+        <input type="checkbox" id="autoLogin" name="autoLogin" class="form-check-input" role="switch" >
+        <label for="autoLogin" class="form-check-label">자동로그인</label>
+        </div>
       </div>
     </form>
-    <ul class="ul_menu center_wrap">
-      <li><a href="${contextPath}" class="btn btn-light">자동로그인</a>
-      <li><a href="${contextPath}" class="btn btn-light">아이디/비밀번호 찾기</a>
-    </ul>
+      <div class="find_id_pw">
+        <a href="${contextPath}" class="btn btn-light">아이디/비밀번호 찾기</a>
+      </div>
     <hr>
     <div>
       <a href="${naverLoginURL}"><img src="${contextPath}/resources/image/btnG_완성형.png" width="200px"></a>

@@ -124,7 +124,7 @@
 		}
 	  }
   
-  const fnGetDtail = () => {
+  const fnUploadDtail = () => {
 	$(document).on('click', '.upload', function(){
 	  location.href = '${contextPath}/upload/detail.do?uploadNo=' + $(this).data('upload_no');
 	})
@@ -134,7 +134,7 @@
   fnGetUploadList();
   fnScroll();
   fnAddResult();
-  fnGetDtail();
+  fnUploadDtail();
 
 </script>
 

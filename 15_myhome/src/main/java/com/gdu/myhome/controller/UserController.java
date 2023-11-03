@@ -1,9 +1,5 @@
 package com.gdu.myhome.controller;
 
-import java.math.BigInteger;
-import java.net.MulticastSocket;
-import java.net.URLEncoder;
-import java.security.SecureRandom;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.myhome.dto.UserDto;
-import com.gdu.myhome.service.UserSerivceImpl;
 import com.gdu.myhome.service.UserService;
 
 import lombok.RequiredArgsConstructor;

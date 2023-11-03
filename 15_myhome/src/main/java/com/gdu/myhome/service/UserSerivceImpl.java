@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -45,6 +46,8 @@ public class UserSerivceImpl implements UserService {
   @Override
   public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {  // 응답 형식이 많은 경우 void 반환 / Respose로 응답
     
+    String autoLogin = request.getParameter("autoLogin");  // 자동로그인 데이터 값
+    
     String email = request.getParameter("email");
     String pw = mySecurityUtils.getSHA256(request.getParameter("pw")); // 사용자가 보낸 비밀번호 암호화 처리
     
@@ -70,7 +73,8 @@ public class UserSerivceImpl implements UserService {
       session.setAttribute("user", user);                                      // 세션에 유저 정보 전달
       userMapper.insertAccess(email);                                          // 접속 기록 남김
       response.sendRedirect(request.getParameter("referer") );                 // 로그인 후 이전 페이지로 돌아가기
-    } else {                                                                   // 로그인 실패시
+      
+    } else {                                                                     // 로그인 실패시
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<script>");
