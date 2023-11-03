@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,12 @@ public class UploadController {
   @GetMapping(value="/getList.do", produces="application/json")
   public Map<String, Object> getList(HttpServletRequest request){
     return uploadService.getUploadList(request);
+  }
+  
+  @GetMapping("/detail.do")
+  public String detail(HttpServletRequest request, Model model) {
+    uploadService.loadUpload(request, model);
+    return "upload/detail";
   }
 
 }

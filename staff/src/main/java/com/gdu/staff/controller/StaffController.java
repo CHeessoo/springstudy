@@ -26,16 +26,6 @@ public class StaffController {
     return staffService.registerStaff(staff);
   }
   
-  @ResponseBody
-  @GetMapping(value="/list.json", produces="application/json")
-  public Map<String, Object> staffList(HttpServletRequest request){
-    return staffService.staffList(request);
-  }
-  
-  @GetMapping(value="/query.json", produces="application/json")
-  public Map<String, Object> getStaffOne(HttpServletRequest request){
-    
-    return null;
-  }
+
   
 }

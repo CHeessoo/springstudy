@@ -21,17 +21,7 @@ public class StaffServiceImple implements StaffService {
 
   private final StaffMapper staffMapper;
   
-  @Override
-  public Map<String, Object> staffList(HttpServletRequest request) {
-    Map<String, Object> map = Map.of("list", staffMapper.getStaffList());
-    return map;
-  }
-  
-  @Override
-  public Map<String, Object> getStaffOne(HttpServletRequest request) {
-    Map<String, Object> map = Map.of("sno", request.getParameter("sno"));
-    return null;
-  }
+
   
   @Override
   public ResponseEntity<Map<String, Object>> registerStaff(StaffDto staff) {

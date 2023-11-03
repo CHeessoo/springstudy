@@ -49,22 +49,7 @@
 	$('#btn_list').click(() => {
 	  fnInit();
 	  $.ajax({
-		type: 'get',
-		url: '${contextPath}/list.json',
-		dataType: 'json',
-		success: (resData) => {
-		  $('#staff_list').empty();
-		  $.each(resData.list, () => {
-			var tr = '<tr>';
-			tr += '<td>' + ${sno} + '</td>';
-			tr += '<td>' + ${name} + '</td>';
-			tr += '<td>' + ${dept} + '</td>';
-			tr += '<td>' + ${salary} + '</td>';
-			tr += '</tr>';
-			$('#staff_list').append(tr);
-		  console.log(resData);
-		  })
-		}
+		  
 	  })
 	})
   }
@@ -73,25 +58,7 @@
   const fnGetStaff = () => {
 	$('#btn_query').click(() => {
 	  $.ajax({
-		type: 'get',
-		url: '${contextPath}/query.json',
-		data: 'query=' + $('#query').val(),
-		dataType: 'json',
-		success: (resData) => {
-		  $('#staff_list').empty();
-			tr += '<tr>';
-			tr += '<td>' + resData.sno + '</td>';
-			tr += '<td>' + resData.name + '</td>';
-			tr += '<td>' + resData.dept + '</td>';
-			tr += '<td>' + resData.salary + '</td>';
-			tr += '</tr>';
-			$('#staff_list').append(tr);
-		},
-		error: (jqXHR) => {
-		  if(jqXHR.staff === null){
-			alert('조회된 사원 정보가 없습니다.');
-		  }
-		}
+		
 	  })
 	})
   }
