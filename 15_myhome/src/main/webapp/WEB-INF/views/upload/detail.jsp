@@ -25,7 +25,7 @@
   <div>수정일 : ${upload.modifiedAt}</div>
   <div>제목 : ${upload.title}</div>
   <div>내용</div>
-  <div>${uplaod.contents}</div>
+  <div>${upload.contents}</div>
   <div>
     <form id="frm_btn" method="post">
       <input type="hidden" name="uploadNo" value="${upload.uploadNo}">
@@ -63,14 +63,12 @@
   const fnDownload = () => {
 	$('.attach').click(function(){
 	  if(confirm('다운로드 할까요?')){
-		$.ajax({
-		  type: 'get',
-		  url: '${contextPath}/upload/download.do',
-		  data: 'attachNo=' + $(this).data('attach_no')
-		})
+		location.href = '${contextPath}/upload/download.do?attachNo=' + $(this).data('attach_no');
 	  }
 	})
   }
+  
+  
   
   fnDownload();
   

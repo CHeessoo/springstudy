@@ -3,7 +3,10 @@ package com.gdu.myhome.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +56,11 @@ public class UploadController {
   public String detail(HttpServletRequest request, Model model) {
     uploadService.loadUpload(request, model);
     return "upload/detail";
+  }
+  
+  @GetMapping("/download.do")
+  public ResponseEntity<Resource> download(HttpServletRequest request) {
+    return uploadService.download(request);
   }
 
 }

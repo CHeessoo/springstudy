@@ -63,6 +63,7 @@
 	  // 응답
 	  dataType: 'json',
 	  success: (resData) => {  // resData = {"uploadList": [], "totalPage": 10(전체페이지수 정수값)}
+
 		totalPage = resData.totalPage;
 	  	$.each(resData.uploadList, (i, upload) => {
 	  	  let str = '<div class="upload" data-upload_no="' + upload.uploadNo + '">';
@@ -80,6 +81,7 @@
 	  }
 	})
   }
+  
   
   const fnScroll = () => {
 	
@@ -116,7 +118,6 @@
 		  if(addResult === 'true'){
 			alert('성공적으로 업로드 되었습니다.');
 			$('#upload_list').empty(); // 추가 후 새로고침
-			fnGetUploadList();         // 목록 갱신
 		  } else {
 			alert('업로드가 실패하였습니다.');
 		  }
