@@ -279,4 +279,69 @@ public class UploadServiceImple implements UploadService {
   }
   
   
+  @Override
+  public void removeTempFiles() {
+    
+    File tempDir = new File(myFileUtils.getTempPath()); // 임시파일 경로
+    File[] targetList = tempDir.listFiles();            // 임시파일 정보 다 가져오기
+    if(targetList != null) {                            // 임시파일이 하나라도 존재하면
+      for(File target : targetList) {
+        target.delete();                                // 임시파일 삭제하기
+      }
+    }
+    
+  }
+  
+  
+  @Transactional(readOnly=true)
+  @Override
+  public UploadDto getUpload(int uploadNo) {
+    return uploadMapper.getUpload(uploadNo);
+  }
+  
+  
+  @Override
+  public int modifyUpload(UploadDto upload) {
+    return uploadMapper.updateUpload(upload);
+  }
+  
+  
+  @Override
+  public Map<String, Object> getAttachList(HttpServletRequest request) {
+    
+    Optional<String> opt = Optional.ofNullable(request.getParameter("uploadNo"));
+    int uploadNo = Integer.parseInt(opt.orElse("0"));
+    
+    return Map.of("attachList", uploadMapper.getAttachList(uploadNo));
+  }
+  
+  
+  @Override
+  public Map<String, Object> removeAttach(HttpServletRequest request) {
+    
+    Optional<String> opt = Optional.ofNullable(request.getParameter("attachNo"));
+    int attachNo = Integer.parseInt(opt.orElse("0"));
+    
+    // 파일 삭제
+    AttachDto attach = uploadMapper.getAttach(attachNo);
+    File file = new File(attach.getPath(), attach.getFilesystemName());
+    if(file.exists()) {
+      file.delete();
+    }
+    
+    // 썸네일 삭제
+    if(attach.getHasThumbnail() == 1) {
+      File thumbnail = new File(attach.getPath(), "s_" + attach.getFilesystemName());
+      if(thumbnail.exists()) {
+        thumbnail.delete();
+      }
+    }
+    
+    // ATTACH_T 삭제
+    int removeResult = uploadMapper.deleteAttach(attachNo);
+
+    return Map.of("removeResult", removeResult);
+  }
+  
+  
 }

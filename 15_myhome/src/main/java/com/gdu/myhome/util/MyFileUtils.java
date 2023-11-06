@@ -33,7 +33,7 @@ public class MyFileUtils {
   
   // 임시 파일이 저장될 경로 반환하기 (zip 파일)
   public String getTempPath() {
-    return "/temp";
+    return "/temporary";
   }
   
   // 파일이 저장될 이름 반환하기

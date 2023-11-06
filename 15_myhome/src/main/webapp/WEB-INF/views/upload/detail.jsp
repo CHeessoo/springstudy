@@ -61,6 +61,15 @@
   
 <script>
 
+  var frmBtn = $('#frm_btn');
+
+  const fnEdit = () => {
+	$('#btn_edit').click(() => {
+		frmBtn.attr('action', '${contextPath}/upload/edit.form');
+		frmBtn.submit();
+	})
+  }
+
   const fnDownload = () => {
 	$('.attach').click(function(){
 	  if(confirm('다운로드 할까요?')){
@@ -69,9 +78,22 @@
 	})
   }
   
+  const fnModifyResult = () => {
+	let modifyResult = '${modifyResult}';
+	if(modifyResult !== ''){
+	  if(modifyResult === '1'){
+		alert('게시글이 수정되었습니다.');
+	  } else {
+		alert('게시글이 수정되지 않았습니다.');
+	  }
+	}
+  }
   
   
+  
+  fnEdit();
   fnDownload();
+  fnModifyResult();
   
 </script>
 
