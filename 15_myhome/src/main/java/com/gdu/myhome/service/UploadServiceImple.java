@@ -61,7 +61,7 @@ public class UploadServiceImple implements UploadService {
                                   .build())
                         .build();
     
-    int addUploadCount = uploadMapper.insertUpload(upload);  // 이후로 UploadDto에 uploadNo가 생성됨
+    int uploadCount = uploadMapper.insertUpload(upload);  // 이후로 UploadDto에 uploadNo가 생성됨
     
     // Spring에서는 첨부된 파일을 MultipartFile이라고 부른다.
     List<MultipartFile> files = multipartRequest.getFiles("files");
@@ -69,6 +69,9 @@ public class UploadServiceImple implements UploadService {
     // 파일 개수로는 첨부파일의 유무를 알 수 없음
     // 파일 이름으로 구분 : files.get(0).getOriginalFilename().isEmpty()
     // 파일 사이즈로 구분 : files.get(0).getSize() == 0
+    
+    // 첨부 없을 때 : [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]]
+    // 첨부 1개     : [MultipartFile[field="files", filename="animal1.jpg", contentType=image/jpeg, size=123456]]
     int attachCount;
     if(files.get(0).getSize() == 0) {  // 등록된 파일 인덱스0의 사이즈가 0일때(==첨부파일이 없을때를 구분) 
       attachCount = 1;  // 첨부된게 없으면 attachCount가 1 (files.size()와 값을 맞춘다.)
@@ -86,8 +89,8 @@ public class UploadServiceImple implements UploadService {
           dir.mkdirs();
         }
         
-        String orginalFilename = multipartFile.getOriginalFilename();
-        String filesystemName = myFileUtils.getFilesystemName(orginalFilename);
+        String orginalFilename = multipartFile.getOriginalFilename();            // 원래 파일명
+        String filesystemName = myFileUtils.getFilesystemName(orginalFilename);  // 저장할 파일명
         File file = new File(dir, filesystemName);
         
         multipartFile.transferTo(file);  // 실제로 파일이 저장되는 단계
@@ -117,7 +120,7 @@ public class UploadServiceImple implements UploadService {
 
     }  // for
     
-    return (addUploadCount == 1) && (files.size() == attachCount);  // addUploadCount 값이 1이고, files.size()와 attachCount의 값이 같으면 true
+    return (uploadCount == 1) && (files.size() == attachCount);  // addUploadCount 값이 1이고, files.size()와 attachCount의 값이 같으면 true
   }
 
   
@@ -341,6 +344,88 @@ public class UploadServiceImple implements UploadService {
     int removeResult = uploadMapper.deleteAttach(attachNo);
 
     return Map.of("removeResult", removeResult);
+  }
+  
+  
+  @Override
+  public Map<String, Object> addAttach(MultipartHttpServletRequest multipartRequest) throws Exception {
+    
+    List<MultipartFile> files = multipartRequest.getFiles("files");
+    
+    int attachCount;
+    if(files.get(0).getSize() == 0) {  // 등록된 파일 인덱스0의 사이즈가 0일때(==첨부파일이 없을때를 구분) 
+      attachCount = 1;                 // 첨부된게 없으면 attachCount가 1 (files.size()와 값을 맞춘다.)
+    } else {
+      attachCount = 0;                 // 첨부된게 있으면 0개부터 시작
+    }
+    
+    for(MultipartFile multipartFile : files) {
+      
+      if(multipartFile != null && !multipartFile.isEmpty()) {
+        
+        String path = myFileUtils.getUploadPath();
+        File dir = new File(path);
+        if(!dir.exists()) {
+          dir.mkdirs();
+        }
+        
+        String orginalFilename = multipartFile.getOriginalFilename();            // 원래 파일명
+        String filesystemName = myFileUtils.getFilesystemName(orginalFilename);  // 저장할 파일명
+        File file = new File(dir, filesystemName);
+        
+        multipartFile.transferTo(file);  // 실제로 파일이 저장되는 단계
+        
+        String contentType = Files.probeContentType(file.toPath()); // 이미지의 Content-Type은 image/jpeg, image/png 등 image로 시작한다.
+        // null 체크가 필요하면 반드시 null 체크가 최우선적으로 온다.
+        int hasThumbnail = (contentType != null && contentType.startsWith("image")) ? 1 : 0;  
+        
+        if(hasThumbnail == 1) {
+          File thumbnail = new File(dir, "s_" + filesystemName); // small 이미지를 의미하는 s_을 덧붙임
+          Thumbnails.of(file)           // 원본 파일 이미지를
+                    .size(100, 100)     // 가로 100px, 세로 100px 크기의 작은 이미지로 변경해서
+                    .toFile(thumbnail); // 썸네일을 제작한다.
+        }
+        
+        AttachDto attach = AttachDto.builder()
+                            .path(path)
+                            .originalFilename(orginalFilename)
+                            .filesystemName(filesystemName)
+                            .hasThumbnail(hasThumbnail)
+                            .uploadNo(Integer.parseInt(multipartRequest.getParameter("uploadNo")))
+                            .build();
+        
+        attachCount += uploadMapper.insertAttach(attach);
+        
+      }  // if
+
+    }  // for
+    
+    return Map.of("attachResult", (files.size() == attachCount)); 
+  }
+  
+  
+  @Override
+  public int removeUpload(int uploadNo) {
+    
+    // 파일 삭제
+    List<AttachDto> attachList = uploadMapper.getAttachList(uploadNo);
+    for(AttachDto attach : attachList) {
+      
+      File file = new File(attach.getPath(), attach.getFilesystemName());
+      if(file.exists()) {
+        file.delete();
+      }
+      // 썸네일 삭제
+      if(attach.getHasThumbnail() == 1) {
+        File thumbnail = new File(attach.getPath(), "s_" + attach.getFilesystemName());
+        if(thumbnail.exists()) {
+          thumbnail.delete();
+        }
+      }
+    }
+    
+    // UPLOAD_T 삭제
+    return uploadMapper.deleteUpload(uploadNo);
   }
   
   

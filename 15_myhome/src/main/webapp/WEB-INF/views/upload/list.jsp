@@ -82,6 +82,11 @@
 	})
   }
   
+  const fnUploadDtail = () => {
+	$(document).on('click', '.upload', function(){
+	  location.href = '${contextPath}/upload/detail.do?uploadNo=' + $(this).data('upload_no');
+	})
+  }
   
   const fnScroll = () => {
 	
@@ -124,17 +129,25 @@
 		}
 	  }
   
-  const fnUploadDtail = () => {
-	$(document).on('click', '.upload', function(){
-	  location.href = '${contextPath}/upload/detail.do?uploadNo=' + $(this).data('upload_no');
-	})
-  }
+  const fnRemoveResult = () => {
+		let removeResult = '${removeResult}';  // '', '1', '0'
+		if(removeResult !== ''){
+		  if(removeResult === '1'){
+			alert('게시글이 삭제되었습니다.');
+			$('#upload_list').empty(); // 추가 후 새로고침
+		  } else {
+			alert('게시글 삭제가 실패했습니다.');
+		  }
+		}
+	  }
+  
   
   
   fnGetUploadList();
+  fnUploadDtail();
   fnScroll();
   fnAddResult();
-  fnUploadDtail();
+  fnRemoveResult();
 
 </script>
 

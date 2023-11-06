@@ -27,11 +27,13 @@
   <div>내용</div>
   <div>${upload.contents}</div>
   <div>
-    <form id="frm_btn" method="post">
-      <input type="hidden" name="uploadNo" value="${upload.uploadNo}">
-      <button type="button" id="btn_edit">편집</button>
-      <button type="button" id="btn_remove">삭제</button>
-    </form>
+    <c:if test="${sessionScope.user.userNo == upload.userDto.userNo}">
+      <form id="frm_btn" >
+        <input type="hidden" name="uploadNo" value="${upload.uploadNo}">
+        <button type="button" id="btn_edit" class="btn btn-outline-secondary">편집</button>
+        <button type="button" id="btn_remove" class="btn btn-outline-secondary">삭제</button>
+      </form>
+    </c:if>
   </div>
   
   <hr>
@@ -66,7 +68,18 @@
   const fnEdit = () => {
 	$('#btn_edit').click(() => {
 		frmBtn.attr('action', '${contextPath}/upload/edit.form');
+		frmBtn.attr('method', 'get');
 		frmBtn.submit();
+	})
+  }
+  
+  const fnRemove = () => {
+	$('#btn_remove').click(() => {
+	  if(confirm('해당 게시글을 삭제할까요?')){
+		frmBtn.attr('action', '${contextPath}/upload/removeUpload.do');
+		frmBtn.attr('method', 'post');
+		frmBtn.submit();
+	  }
 	})
   }
 
@@ -92,6 +105,7 @@
   
   
   fnEdit();
+  fnRemove();
   fnDownload();
   fnModifyResult();
   
