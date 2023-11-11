@@ -20,13 +20,14 @@ public interface BlogMapper {
   public int updateHit(int blogNo);
   public BlogDto getBlog(int blogNo);
   public int updateBlog(BlogDto blog);
+  public List<BlogImageDto> getBlogImageList(int blogNo);
+  public int deleteBlogImage(String filesystemName);
+  public int deleteBlogImageList(int blogNo);
   public int deleteBlog(int blogNo);
-  public int deleteImage(int blogNo);
   
   public int insertComment(CommentDto comment);
   public int getCommentCount(int blogNo);
   public List<CommentDto> getCommentList(Map<String, Object> map);
   public int insertCommentReply(CommentDto comment);
   public int deleteComment(int commentNo);
-
 }
