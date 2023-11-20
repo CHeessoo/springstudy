@@ -1,57 +1,35 @@
 @charset "UTF-8";
 
-/* 간단한 CSS 초기화 */
-
-/* 구글 폰트 (Noto Sans Korean) import */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-/*
-	아이콘 사용
-	사이트 : https://cdnjs.com/
-	검색   : font-awesome  
-	버전   : all.min.css 버전 
-	url copy해서 import
-*/
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
-
-/* 모든 글꼴에 적용 */
 * {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333333;
+}
+body, div, ul, li, ol {
   padding: 0;
   margin: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  color: #121212;
   position: relative;
+  box-sizing: border-box;
 }
-
-/* a태그 밑줄 없애기 */
-a {
-  text-decoration: none; 
-}
-
-/* 목록태그 앞에 생성되는 번호나 글머리 기호 없애기 */
-ul, ol {
-  list-style-type: none; 
-}
-
 body {
   width: 1000px;
   margin: 0 auto;
 }
-
-
-.ul_menu {
-  display: flex;
+a {
+  text-decoration: none;
+  color: #333333;
 }
-.ul_menu li {
-  padding: 0 5px;
+i {
+  color: #333333;
 }
-.ul_menu li + li {
-  border-left: 1px solid gray;
+a:hover {
+  color: crimson;
 }
-.center_wrap {
-  margin: 0 auto;
+a:hover i {
+  color: crimson;
 }
-.right_wrap {
-  right: 0;
-  position: absolute;
+ul, ol {
+  list-style-type: none;
 }

@@ -10,15 +10,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${param.title == null ? '마이홈' : param.title}</title>
+<title>
+  <c:if test="${empty param.title}">마이홈</c:if>
+  <c:if test="${not empty param.title}">${param.title}</c:if>
+</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <link rel="stylesheet" href="${contextPath}/resources/css/init.css?dt=${dt}" />
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css?dt=${dt}" />
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css?dt=${dt}" />
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css?dt=${dt}" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/paging.css?dt=${dt}" />
+<link rel="stylesheet" href="${contextPath}/resources/css/common.css?dt=${dt}" />
+<link rel="stylesheet" href="${contextPath}/resources/css/ckeditor.css?dt=${dt}" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/decoupled-document/ckeditor.js"></script>
 </head>
